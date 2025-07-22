@@ -7,6 +7,7 @@ function Home() {
   const { currentUser, logout } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authMode, setAuthMode] = useState("signin");
+  const [counter, setCounter] = useState(0);
 
   const handleSignIn = () => {
     setAuthMode("signin");
@@ -108,6 +109,16 @@ function Home() {
                 Get Started Free
               </button>
             )}
+          </div>
+
+          {/* Counter Button */}
+          <div className="mt-8">
+            <button
+              onClick={() => setCounter(counter + 1)}
+              className="bg-green-600 text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-green-700 transition duration-200 shadow-lg"
+            >
+              Click Counter: {counter}
+            </button>
           </div>
         </div>
       </div>
