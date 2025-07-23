@@ -5,24 +5,30 @@ import Home from "./pages/Home";
 import Create from "./pages/Create";
 import Dashboard from "./pages/Dashboard";
 import PublicCV from "./pages/PublicCV";
+import Footer from "./Components/Footer";
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <Routes>
-          {/* Home / Landing page */}
-          <Route path="/" element={<Home />} />
+        <div className="min-h-screen flex flex-col">
+          <div className="flex-grow">
+            <Routes>
+              {/* Home / Landing page */}
+              <Route path="/" element={<Home />} />
 
-          {/* CV Builder */}
-          <Route path="/create" element={<Create />} />
+              {/* CV Builder */}
+              <Route path="/create" element={<Create />} />
 
-          {/* User's saved CVs */}
-          <Route path="/dashboard" element={<Dashboard />} />
+              {/* User's saved CVs */}
+              <Route path="/dashboard" element={<Dashboard />} />
 
-          {/* Public CV view */}
-          <Route path="/cv/:slug" element={<PublicCV />} />
-        </Routes>
+              {/* Public CV view */}
+              <Route path="/cv/:slug" element={<PublicCV />} />
+            </Routes>
+          </div>
+          <Footer />
+        </div>
       </Router>
     </AuthProvider>
   );
