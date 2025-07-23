@@ -141,156 +141,149 @@ function Home() {
             </p>
           </div>
           <div className="w-full flex items-center justify-center">
-            <div className="w-5/6 flex flex-row gap-8 p-8">
-              <div className="w-1/3 h-96 bg-gradient-to-br from-zinc-800 via-zinc-900 to-black rounded-2xl border-2 border-zinc-600 shadow-2xl relative p-6 flex flex-col justify-between hover:border-zinc-500 transition-all duration-300 group overflow-hidden">
-                {/* Background decoration */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-zinc-700/20 to-transparent rounded-full -translate-y-16 translate-x-16"></div>
-                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-zinc-700/10 to-transparent rounded-full translate-y-12 -translate-x-12"></div>
+            <div className="w-full max-w-7xl flex flex-col md:flex-row gap-6 md:gap-8 p-4 md:p-8">
+              <div className="w-full md:w-1/3 h-64 md:h-80 bg-gradient-to-b from-zinc-900 to-zinc-800 rounded-3xl relative overflow-hidden shadow-2xl group hover:scale-105 transition-transform duration-300">
+                <div className="absolute inset-0 bg-white/5"></div>
                 {/* Blue color spots */}
-                <div className="absolute top-1/4 left-1/4 w-16 h-16 bg-gradient-to-br from-blue-600/10 to-cyan-500/10 rounded-full blur-xl"></div>
-                <div className="absolute bottom-1/3 right-1/3 w-20 h-20 bg-gradient-to-tl from-blue-500/15 to-cyan-400/15 rounded-full blur-2xl"></div>
+                <div className="absolute top-1/4 left-1/4 w-12 h-12 bg-gradient-to-br from-blue-600/10 to-cyan-500/10 rounded-full blur-xl"></div>
+                <div className="absolute bottom-1/3 right-1/3 w-16 h-16 bg-gradient-to-tl from-blue-500/15 to-cyan-400/15 rounded-full blur-2xl"></div>
 
-                <div className="text-3xl font-black text-white bg-zinc-700 w-12 h-12 rounded-xl flex items-center justify-center shadow-lg">
-                  1.
-                </div>
-
-                <div className="flex items-center justify-center flex-1 flex-col space-y-6 z-10">
-                  <div className="bg-zinc-700/50 p-4 rounded-2xl backdrop-blur-sm">
-                    <svg
-                      className="w-20 h-20 text-zinc-300 group-hover:text-white transition-colors duration-300"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                <div className="relative z-10 p-6 md:p-8 h-full flex flex-col justify-between">
+                  <div>
+                    <div className="w-12 h-12 md:w-14 md:h-14 bg-zinc-700 rounded-full mb-4 shadow-lg flex items-center justify-center">
+                      <svg
+                        className="w-6 h-6 md:w-7 md:h-7 text-white opacity-80"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
                         strokeWidth={1.5}
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
-                  </div>
-                  <div className="text-center space-y-2">
-                    <h3 className="text-xl font-bold text-white">
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
                       Create Account
                     </h3>
-                    <p className="text-sm text-zinc-400 leading-relaxed">
-                      Secure authentication to protect your data
+                    <p className="text-zinc-200 text-sm">
+                      Secure authentication to protect your data and access all
+                      features.
                     </p>
                   </div>
-                  <button className="bg-zinc-700 hover:bg-zinc-600 text-white px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200 shadow-lg hover:shadow-xl border border-zinc-600 hover:border-zinc-500">
-                    Sign In Now
-                  </button>
+                  <div className="flex justify-center mt-4 md:mt-6">
+                    <button className="bg-white text-black font-semibold px-4 md:px-6 py-2 rounded-full shadow hover:bg-zinc-200 transition text-sm md:text-base">
+                      Sign Up
+                    </button>
+                  </div>
                 </div>
-
-                <div className="text-xs text-zinc-500 text-right font-medium uppercase tracking-wide">
-                  Step One • Authentication
+                <div className="absolute top-4 right-4 w-2 h-2 bg-white rounded-full opacity-30 animate-pulse"></div>
+                <div className="absolute bottom-8 left-6 w-1 h-1 bg-white rounded-full opacity-10"></div>
+                <div className="absolute top-6 left-4 text-xs font-bold text-white/60">
+                  01
                 </div>
               </div>
 
-              <div className="w-1/3 h-96 bg-gradient-to-br from-zinc-800 via-zinc-900 to-black rounded-2xl border-2 border-zinc-600 shadow-2xl relative p-6 flex flex-col justify-between hover:border-zinc-500 transition-all duration-300 group overflow-hidden">
-                {/* Background decoration */}
-                <div className="absolute top-0 left-0 w-28 h-28 bg-gradient-to-br from-zinc-600/15 to-transparent rounded-full -translate-y-14 -translate-x-14"></div>
-                <div className="absolute bottom-0 right-0 w-36 h-36 bg-gradient-to-tl from-zinc-700/20 to-transparent rounded-full translate-y-18 translate-x-18"></div>
+              <div className="w-full md:w-1/3 h-64 md:h-80 bg-gradient-to-b from-zinc-900 to-zinc-800 rounded-3xl relative overflow-hidden shadow-2xl group hover:scale-105 transition-transform duration-300">
+                <div className="absolute inset-0 bg-white/5"></div>
                 {/* Dark blue color spots */}
-                <div className="absolute top-1/3 right-1/4 w-18 h-18 bg-gradient-to-br from-blue-800/15 to-blue-900/10 rounded-full blur-xl"></div>
-                <div className="absolute bottom-1/4 left-1/3 w-14 h-14 bg-gradient-to-tl from-blue-700/20 to-blue-800/10 rounded-full blur-2xl"></div>
+                <div className="absolute top-1/3 right-1/4 w-14 h-14 bg-gradient-to-br from-blue-800/15 to-blue-900/10 rounded-full blur-xl"></div>
+                <div className="absolute bottom-1/4 left-1/3 w-10 h-10 bg-gradient-to-tl from-blue-700/20 to-blue-800/10 rounded-full blur-2xl"></div>
 
-                <div className="text-3xl font-black text-white bg-zinc-700 w-12 h-12 rounded-xl flex items-center justify-center shadow-lg">
-                  2.
-                </div>
-
-                <div className="flex items-center justify-center flex-1 flex-col space-y-6 z-10">
-                  <div className="bg-zinc-700/50 p-4 rounded-2xl backdrop-blur-sm">
-                    <svg
-                      className="w-20 h-20 text-zinc-300 group-hover:text-white transition-colors duration-300"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                <div className="relative z-10 p-6 md:p-8 h-full flex flex-col justify-between">
+                  <div>
+                    <div className="w-12 h-12 md:w-14 md:h-14 bg-zinc-700 rounded-full mb-4 shadow-lg flex items-center justify-center">
+                      <svg
+                        className="w-6 h-6 md:w-7 md:h-7 text-white opacity-80"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
                         strokeWidth={1.5}
-                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                      />
-                    </svg>
-                  </div>
-                  <div className="text-center space-y-2">
-                    <h3 className="text-xl font-bold text-white">
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
                       Build Profile
                     </h3>
-                    <p className="text-sm text-zinc-400 leading-relaxed">
-                      Add your experience, skills & achievements
+                    <p className="text-zinc-200 text-sm">
+                      Add your experience, skills and achievements to create
+                      your CV.
                     </p>
                   </div>
-                  <div className="flex space-x-2">
-                    <div className="w-2 h-2 bg-zinc-600 rounded-full"></div>
-                    <div className="w-2 h-2 bg-zinc-500 rounded-full"></div>
-                    <div className="w-2 h-2 bg-zinc-400 rounded-full"></div>
+                  <div className="flex justify-center mt-4 md:mt-6">
+                    <div className="flex space-x-1">
+                      <div className="w-1.5 h-1.5 bg-white/60 rounded-full"></div>
+                      <div className="w-1.5 h-1.5 bg-white/40 rounded-full"></div>
+                      <div className="w-1.5 h-1.5 bg-white/20 rounded-full"></div>
+                    </div>
                   </div>
                 </div>
-
-                <div className="text-xs text-zinc-500 text-right font-medium uppercase tracking-wide">
-                  Step Two • Data Entry
+                <div className="absolute top-4 right-4 w-2 h-2 bg-white rounded-full opacity-30 animate-pulse"></div>
+                <div className="absolute bottom-8 left-6 w-1 h-1 bg-white rounded-full opacity-10"></div>
+                <div className="absolute top-6 left-4 text-xs font-bold text-white/60">
+                  02
                 </div>
               </div>
 
-              <div className="w-1/3 h-96 bg-gradient-to-br from-zinc-800 via-zinc-900 to-black rounded-2xl border-2 border-zinc-600 shadow-2xl relative p-6 flex flex-col justify-between hover:border-zinc-500 transition-all duration-300 group overflow-hidden">
-                {/* Background decoration */}
-                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-zinc-600/10 to-transparent rounded-full -translate-y-20 translate-x-20"></div>
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-zinc-700/15 to-transparent rounded-full translate-y-16 -translate-x-16"></div>
+              <div className="w-full md:w-1/3 h-64 md:h-80 bg-gradient-to-b from-zinc-900 to-zinc-800 rounded-3xl relative overflow-hidden shadow-2xl group hover:scale-105 transition-transform duration-300">
+                <div className="absolute inset-0 bg-white/5"></div>
                 {/* Purple color spots */}
-                <div className="absolute top-1/4 left-1/3 w-22 h-22 bg-gradient-to-br from-purple-600/12 to-violet-700/8 rounded-full blur-xl"></div>
-                <div className="absolute bottom-1/3 right-1/4 w-16 h-16 bg-gradient-to-tl from-purple-500/18 to-purple-800/10 rounded-full blur-2xl"></div>
+                <div className="absolute top-1/4 left-1/3 w-16 h-16 bg-gradient-to-br from-purple-600/12 to-violet-700/8 rounded-full blur-xl"></div>
+                <div className="absolute bottom-1/3 right-1/4 w-12 h-12 bg-gradient-to-tl from-purple-500/18 to-purple-800/10 rounded-full blur-2xl"></div>
 
-                <div className="text-3xl font-black text-white bg-zinc-700 w-12 h-12 rounded-xl flex items-center justify-center shadow-lg">
-                  3.
-                </div>
-
-                <div className="flex items-center justify-center flex-1 flex-col space-y-6 z-10">
-                  <div className="bg-zinc-700/50 p-4 rounded-2xl backdrop-blur-sm relative">
-                    <svg
-                      className="w-20 h-20 text-zinc-300 group-hover:text-white transition-colors duration-300"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                <div className="relative z-10 p-6 md:p-8 h-full flex flex-col justify-between">
+                  <div>
+                    <div className="w-12 h-12 md:w-14 md:h-14 bg-zinc-700 rounded-full mb-4 shadow-lg flex items-center justify-center">
+                      <svg
+                        className="w-6 h-6 md:w-7 md:h-7 text-white opacity-80"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
                         strokeWidth={1.5}
-                        d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"
-                      />
-                    </svg>
-                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-zinc-400 rounded-full animate-pulse"></div>
-                  </div>
-                  <div className="text-center space-y-2">
-                    <h3 className="text-xl font-bold text-white">
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
                       Share & Export
                     </h3>
-                    <p className="text-sm text-zinc-400 leading-relaxed">
-                      Generate link, download PDF, send to employers
+                    <p className="text-zinc-200 text-sm">
+                      Generate link, download PDF, and share with employers
+                      instantly.
                     </p>
                   </div>
-                  <div className="flex items-center space-x-3 text-xs text-zinc-400">
-                    <span className="flex items-center space-x-1">
-                      <div className="w-1 h-1 bg-zinc-500 rounded-full"></div>
-                      <span>PDF</span>
-                    </span>
-                    <span className="flex items-center space-x-1">
-                      <div className="w-1 h-1 bg-zinc-500 rounded-full"></div>
-                      <span>Link</span>
-                    </span>
-                    <span className="flex items-center space-x-1">
-                      <div className="w-1 h-1 bg-zinc-500 rounded-full"></div>
-                      <span>Share</span>
-                    </span>
+                  <div className="flex justify-center mt-4 md:mt-6">
+                    <div className="flex items-center space-x-2 text-xs text-white/60">
+                      <span className="flex items-center space-x-1">
+                        <div className="w-1 h-1 bg-white/40 rounded-full"></div>
+                        <span>PDF</span>
+                      </span>
+                      <span className="flex items-center space-x-1">
+                        <div className="w-1 h-1 bg-white/40 rounded-full"></div>
+                        <span>Link</span>
+                      </span>
+                      <span className="flex items-center space-x-1">
+                        <div className="w-1 h-1 bg-white/40 rounded-full"></div>
+                        <span>Share</span>
+                      </span>
+                    </div>
                   </div>
                 </div>
-
-                <div className="text-xs text-zinc-500 text-right font-medium uppercase tracking-wide">
-                  Step Three • Distribution
+                <div className="absolute top-4 right-4 w-2 h-2 bg-white rounded-full opacity-30 animate-pulse"></div>
+                <div className="absolute bottom-8 left-6 w-1 h-1 bg-white rounded-full opacity-10"></div>
+                <div className="absolute top-6 left-4 text-xs font-bold text-white/60">
+                  03
                 </div>
               </div>
             </div>
