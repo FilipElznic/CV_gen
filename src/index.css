@@ -1,3 +1,70 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Print styles for CV */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .cv-preview,
+  .cv-preview * {
+    visibility: visible;
+  }
+
+  .cv-preview {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 20px !important;
+  }
+
+  /* Hide navigation and form elements during print */
+  .print\\:hidden {
+    display: none !important;
+  }
+
+  /* Ensure text is black for printing */
+  .cv-preview * {
+    color: black !important;
+  }
+
+  /* Page break settings */
+  .cv-preview {
+    page-break-inside: avoid;
+  }
+
+  .cv-preview h1,
+  .cv-preview h2,
+  .cv-preview h3,
+  .cv-preview h4 {
+    page-break-after: avoid;
+  }
+
+  .cv-preview .mb-6 {
+    page-break-inside: avoid;
+  }
+}
+
+/* Responsive improvements */
+@media (max-width: 640px) {
+  .cv-preview {
+    font-size: 14px;
+  }
+
+  .cv-preview h1 {
+    font-size: 1.5rem;
+  }
+
+  .cv-preview h3 {
+    font-size: 1.1rem;
+  }
+}

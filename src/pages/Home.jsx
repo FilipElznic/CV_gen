@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Navbar from "../components/Navbar";
+import FAQ from "../Components/FAQ";
 
 function Home() {
   const { currentUser } = useAuth();
@@ -12,11 +13,11 @@ function Home() {
         {/* Hero Section */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 mt-24">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 mt-24">
               Build Your
               <span className="text-cyan-400 block">Own professional CV</span>
             </h1>
-            <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
               Create stunning, professional CVs with our easy-to-use builder.
               Choose from multiple templates and share your CV with a simple
               link.
@@ -26,13 +27,13 @@ function Home() {
                 <>
                   <Link
                     to="/create"
-                    className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:from-cyan-600 hover:to-blue-700 transition duration-200 shadow-lg hover:shadow-cyan-500/25"
+                    className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 sm:px-8 py-3 rounded-lg text-base sm:text-lg font-semibold hover:from-cyan-600 hover:to-blue-700 transition duration-200 shadow-lg hover:shadow-cyan-500/25"
                   >
                     Start Building
                   </Link>
                   <Link
                     to="/dashboard"
-                    className="bg-gray-800 text-cyan-400 px-8 py-3 rounded-lg text-lg font-semibold border-2 border-cyan-500 hover:bg-gray-700 transition duration-200 shadow-lg hover:shadow-cyan-500/25"
+                    className="bg-gray-800 text-cyan-400 px-6 sm:px-8 py-3 rounded-lg text-base sm:text-lg font-semibold border-2 border-cyan-500 hover:bg-gray-700 transition duration-200 shadow-lg hover:shadow-cyan-500/25"
                   >
                     View My CVs
                   </Link>
@@ -43,7 +44,7 @@ function Home() {
                   onClick={() => {
                     /* This will be handled by Navbar */
                   }}
-                  className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:from-cyan-600 hover:to-blue-700 transition duration-200 shadow-lg hover:shadow-cyan-500/25"
+                  className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 sm:px-8 py-3 rounded-lg text-base sm:text-lg font-semibold hover:from-cyan-600 hover:to-blue-700 transition duration-200 shadow-lg hover:shadow-cyan-500/25"
                 >
                   Get Started Free
                 </Link>
@@ -70,10 +71,10 @@ function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-white">
+              <h3 className="text-lg sm:text-xl font-semibold mb-2 text-white">
                 Easy Builder
               </h3>
-              <p className="text-gray-400">
+              <p className="text-sm sm:text-base text-gray-400">
                 Simple drag-and-drop interface to create your perfect CV
               </p>
             </div>
@@ -94,10 +95,10 @@ function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-white">
+              <h3 className="text-lg sm:text-xl font-semibold mb-2 text-white">
                 Share Easily
               </h3>
-              <p className="text-gray-400">
+              <p className="text-sm sm:text-base text-gray-400">
                 Get a shareable link for your CV that you can send to employers
               </p>
             </div>
@@ -118,10 +119,10 @@ function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-white">
+              <h3 className="text-lg sm:text-xl font-semibold mb-2 text-white">
                 Secure Storage
               </h3>
-              <p className="text-gray-400">
+              <p className="text-sm sm:text-base text-gray-400">
                 Your CVs are safely stored in the cloud and always accessible
               </p>
             </div>
@@ -129,11 +130,11 @@ function Home() {
         </div>
 
         <div className="w-full min-h-screen flex flex-col">
-          <div className="w-2/3 mx-auto text-start pt-20">
-            <h2 className="text-6xl font-black mb-4 text-white  mt-20">
+          <div className="w-full sm:w-2/3 mx-auto text-start pt-20 px-4 sm:px-0">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-4 text-white mt-20">
               How does it work?
             </h2>
-            <p className="text-2xl text-gray-400 text-balance mb-10">
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-400 text-balance mb-10">
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem
               quisquam voluptates delectus ea aliquam ut adipisci iure non,
               libero quibusdam recusandae inventore aspernatur corrupti labore
@@ -148,11 +149,11 @@ function Home() {
                 <div className="absolute top-1/4 left-1/4 w-12 h-12 bg-gradient-to-br from-blue-600/10 to-cyan-500/10 rounded-full blur-xl"></div>
                 <div className="absolute bottom-1/3 right-1/3 w-16 h-16 bg-gradient-to-tl from-blue-500/15 to-cyan-400/15 rounded-full blur-2xl"></div>
 
-                <div className="relative z-10 p-6 md:p-8 h-full flex flex-col justify-between">
+                <div className="relative z-10 p-4 sm:p-6 md:p-8 h-full flex flex-col justify-between">
                   <div>
-                    <div className="w-12 h-12 md:w-14 md:h-14 bg-zinc-700 rounded-full mb-4 shadow-lg flex items-center justify-center">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-zinc-700 rounded-full mb-4 shadow-lg flex items-center justify-center">
                       <svg
-                        className="w-6 h-6 md:w-7 md:h-7 text-white opacity-80"
+                        className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white opacity-80"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -165,16 +166,16 @@ function Home() {
                         />
                       </svg>
                     </div>
-                    <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2">
                       Create Account
                     </h3>
-                    <p className="text-zinc-200 text-sm">
+                    <p className="text-zinc-200 text-xs sm:text-sm">
                       Secure authentication to protect your data and access all
                       features.
                     </p>
                   </div>
                   <div className="flex justify-center mt-4 md:mt-6">
-                    <button className="bg-white text-black font-semibold px-4 md:px-6 py-2 rounded-full shadow hover:bg-zinc-200 transition text-sm md:text-base">
+                    <button className="bg-white text-black font-semibold px-3 sm:px-4 md:px-6 py-2 rounded-full shadow hover:bg-zinc-200 transition text-xs sm:text-sm md:text-base">
                       Sign Up
                     </button>
                   </div>
@@ -192,11 +193,11 @@ function Home() {
                 <div className="absolute top-1/3 right-1/4 w-14 h-14 bg-gradient-to-br from-blue-800/15 to-blue-900/10 rounded-full blur-xl"></div>
                 <div className="absolute bottom-1/4 left-1/3 w-10 h-10 bg-gradient-to-tl from-blue-700/20 to-blue-800/10 rounded-full blur-2xl"></div>
 
-                <div className="relative z-10 p-6 md:p-8 h-full flex flex-col justify-between">
+                <div className="relative z-10 p-4 sm:p-6 md:p-8 h-full flex flex-col justify-between">
                   <div>
-                    <div className="w-12 h-12 md:w-14 md:h-14 bg-zinc-700 rounded-full mb-4 shadow-lg flex items-center justify-center">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-zinc-700 rounded-full mb-4 shadow-lg flex items-center justify-center">
                       <svg
-                        className="w-6 h-6 md:w-7 md:h-7 text-white opacity-80"
+                        className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white opacity-80"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -209,10 +210,10 @@ function Home() {
                         />
                       </svg>
                     </div>
-                    <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2">
                       Build Profile
                     </h3>
-                    <p className="text-zinc-200 text-sm">
+                    <p className="text-zinc-200 text-xs sm:text-sm">
                       Add your experience, skills and achievements to create
                       your CV.
                     </p>
@@ -238,11 +239,11 @@ function Home() {
                 <div className="absolute top-1/4 left-1/3 w-16 h-16 bg-gradient-to-br from-purple-600/12 to-violet-700/8 rounded-full blur-xl"></div>
                 <div className="absolute bottom-1/3 right-1/4 w-12 h-12 bg-gradient-to-tl from-purple-500/18 to-purple-800/10 rounded-full blur-2xl"></div>
 
-                <div className="relative z-10 p-6 md:p-8 h-full flex flex-col justify-between">
+                <div className="relative z-10 p-4 sm:p-6 md:p-8 h-full flex flex-col justify-between">
                   <div>
-                    <div className="w-12 h-12 md:w-14 md:h-14 bg-zinc-700 rounded-full mb-4 shadow-lg flex items-center justify-center">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-zinc-700 rounded-full mb-4 shadow-lg flex items-center justify-center">
                       <svg
-                        className="w-6 h-6 md:w-7 md:h-7 text-white opacity-80"
+                        className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white opacity-80"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -255,10 +256,10 @@ function Home() {
                         />
                       </svg>
                     </div>
-                    <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2">
                       Share & Export
                     </h3>
-                    <p className="text-zinc-200 text-sm">
+                    <p className="text-zinc-200 text-xs sm:text-sm">
                       Generate link, download PDF, and share with employers
                       instantly.
                     </p>
@@ -288,6 +289,7 @@ function Home() {
               </div>
             </div>
           </div>
+          <FAQ />
         </div>
       </div>
     </>
