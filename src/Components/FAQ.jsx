@@ -54,11 +54,11 @@ const FAQ = () => {
   ];
 
   return (
-    <div className="w-full  py-16 sm:py-20" id="faq">
+    <div className="w-full  py-8 sm:py-20" id="faq">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 pb-8">
             Frequently Asked
             <span className="text-cyan-400 block">Questions</span>
           </h2>

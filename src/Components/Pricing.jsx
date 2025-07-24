@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const PricingCard = ({
   title,
   price,
@@ -8,30 +6,10 @@ const PricingCard = ({
   features,
   buttonText,
   buttonStyle,
-  isPopular,
   gradientColors,
-  iconColor,
 }) => (
-  <div
-    className={`relative w-full max-w-sm mx-auto ${
-      isPopular ? "lg:scale-110 z-10" : ""
-    }`}
-  >
-    {isPopular && (
-      <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-20">
-        <span className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
-          Most Popular
-        </span>
-      </div>
-    )}
-
-    <div
-      className={`h-full bg-gradient-to-b from-zinc-900 to-zinc-800 rounded-3xl p-8 shadow-2xl border transition-all duration-300 hover:scale-105 ${
-        isPopular
-          ? "border-cyan-500/50 shadow-cyan-500/20"
-          : "border-zinc-700/50 hover:border-zinc-600/50"
-      }`}
-    >
+  <div className="relative w-full max-w-sm mx-auto">
+    <div className="h-full bg-gradient-to-b from-zinc-900 to-zinc-800 rounded-3xl p-8 shadow-2xl border border-zinc-700/50 hover:border-zinc-600/50 transition-all duration-300 hover:scale-105">
       {/* Gradient spots for visual appeal */}
       <div className="absolute inset-0 bg-white/5 rounded-3xl"></div>
       <div
@@ -113,6 +91,34 @@ const PricingCard = ({
               window.location.href = "/signup";
             } else if (buttonText === "Start Building") {
               window.location.href = "/signup";
+            } else if (buttonText === "Share on Social") {
+              // Create a share message
+              const shareText =
+                "Check out this amazing free CV builder! Create professional CVs with multiple templates, all completely free. 🚀";
+              const shareUrl = window.location.origin;
+
+              // Try to use Web Share API if available, otherwise copy to clipboard
+              if (navigator.share) {
+                navigator.share({
+                  title: "Free CV Builder",
+                  text: shareText,
+                  url: shareUrl,
+                });
+              } else {
+                // Fallback: copy share text to clipboard
+                const fullShareText = `${shareText} ${shareUrl}`;
+                navigator.clipboard
+                  .writeText(fullShareText)
+                  .then(() => {
+                    alert(
+                      "Share text copied to clipboard! Paste it on your favorite social media platform."
+                    );
+                  })
+                  .catch(() => {
+                    // If clipboard fails, show the text
+                    prompt("Copy this text to share:", fullShareText);
+                  });
+              }
             }
           }}
         >
@@ -124,29 +130,26 @@ const PricingCard = ({
 );
 
 const PricingSection = () => {
-  const [isAnnual, setIsAnnual] = useState(false);
-
   const pricingPlans = [
     {
-      title: "Everything You Need",
-      price: "0",
+      title: "Share the Love",
+      price: "📢",
       period: null,
       description:
-        "Create and manage your CVs with full access — forever free.",
+        "Help others discover this free CV builder by sharing it on social media!",
       features: [
-        "All CV templates included",
-        "Full customization options",
-        "PDF download",
-        "Shareable links",
-        "Real-time preview",
-        "Responsive on all devices",
+        "Help grow the community",
+        "Share with friends & colleagues",
+        "Spread the word about free CVs",
+        "Support open-source projects",
+        "Make CV creation accessible",
+        "Build a better job market",
       ],
-      buttonText: "Get Started Free",
+      buttonText: "Share on Social",
       buttonStyle:
-        "bg-gradient-to-r from-gray-700 to-gray-600 text-white hover:from-gray-600 hover:to-gray-500 hover:shadow-gray-500/25",
-      isPopular: false,
-      gradientColors: "from-gray-500 to-gray-600",
-      iconColor: "gray",
+        "bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:from-blue-600 hover:to-indigo-700 hover:shadow-blue-500/25",
+      gradientColors: "from-blue-500 to-indigo-600",
+      iconColor: "blue",
     },
     {
       title: "Full Feature Access",
@@ -165,7 +168,6 @@ const PricingSection = () => {
       buttonText: "Start Building",
       buttonStyle:
         "bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:from-cyan-600 hover:to-blue-700 hover:shadow-cyan-500/25",
-      isPopular: true,
       gradientColors: "from-cyan-500 to-blue-600",
       iconColor: "cyan",
     },
@@ -186,7 +188,6 @@ const PricingSection = () => {
       buttonText: "Contact on LinkedIn",
       buttonStyle:
         "bg-gradient-to-r from-purple-500 to-pink-600 text-white hover:from-purple-600 hover:to-pink-700 hover:shadow-purple-500/25",
-      isPopular: false,
       gradientColors: "from-purple-500 to-pink-600",
       iconColor: "purple",
       isSupport: true,

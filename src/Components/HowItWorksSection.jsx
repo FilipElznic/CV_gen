@@ -118,7 +118,7 @@ const HowItWorksSection = () => {
   ];
 
   return (
-    <div className="w-full min-h-screen flex flex-col">
+    <div className="w-full min-h-[70vh] flex flex-col">
       <div className="w-full max-w-4xl mx-auto text-center pt-20 px-4">
         <h2 className="text-5xl md:text-6xl font-black mb-6 text-white">
           How It Works
