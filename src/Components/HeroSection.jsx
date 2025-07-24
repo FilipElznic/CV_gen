@@ -29,10 +29,7 @@ const HeroSection = ({ currentUser }) => (
           </>
         ) : (
           <Link
-            to="/"
-            onClick={() => {
-              /* This will be handled by Navbar */
-            }}
+            to="/create"
             className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:from-cyan-600 hover:to-blue-700 transition duration-200 shadow-lg hover:shadow-cyan-500/25 transform hover:scale-105"
           >
             Get Started Free

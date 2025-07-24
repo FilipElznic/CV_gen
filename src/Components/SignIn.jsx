@@ -2,6 +2,11 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Navbar from "./Navbar";
+import { CiShare2 } from "react-icons/ci";
+import { LuScreenShare } from "react-icons/lu";
+import { FaKey } from "react-icons/fa";
+
+import { LuPencilRuler } from "react-icons/lu";
 
 function SignIn() {
   const [email, setEmail] = useState("");
@@ -31,11 +36,16 @@ function SignIn() {
     <>
       <Navbar />
       <div className="min-h-screen bg-gradient-to-br from-black via-zinc-900 to-zinc-800 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        {/* Background decorative elements */}
+        <CiShare2 className="absolute top-1/4 left-1/3 text-9xl rotate-[200deg] text-white" />
+        <LuScreenShare className="absolute top-1/4 right-1/3 text-9xl rotate-[25deg] text-white" />
+        <FaKey className="absolute bottom-1/4 left-1/3 rotate-[350deg] text-9xl text-white" />
+        <LuPencilRuler
+          className="absolute bottom-1/4 right-1/3 text-9xl
+        rotate-[340deg] text-white"
+        />
         <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-cyan-600/10 to-blue-500/5 rounded-full blur-xl"></div>
         <div className="absolute bottom-32 right-16 w-32 h-32 bg-gradient-to-tl from-purple-600/10 to-pink-500/5 rounded-full blur-2xl"></div>
         <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-gradient-to-br from-emerald-600/8 to-teal-500/4 rounded-full blur-xl"></div>
-
         <div className="w-full max-w-xl mx-auto relative">
           {/* Card with glass morphism effect */}
           <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl p-8 relative overflow-hidden">

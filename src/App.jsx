@@ -11,7 +11,7 @@ import SignIn from "./Components/SignIn";
 import SignUp from "./Components/SignUp";
 import PrivacyPolicy from "./Components/Privacypol";
 import AllCV from "./pages/AllCV";
-import HowToWrite from "./pages/Howtowrite";
+import HowToWrite from "./pages/HowtoWrite";
 import Docs from "./pages/Docs";
 
 function App() {
