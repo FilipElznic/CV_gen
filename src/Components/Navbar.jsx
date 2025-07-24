@@ -204,15 +204,21 @@ function Navbar() {
                   <>
                     <Link
                       to="/cv"
-                      className="text-white hover:text-gray-300 transition-colors duration-200"
+                      className="block w-full text-left px-3 py-2 text-white hover:text-gray-300 transition-colors duration-200"
                     >
                       Public CVs
                     </Link>
                     <Link
                       to="/docs"
-                      className="text-white hover:text-gray-300 transition-colors duration-200"
+                      className="block w-full text-left px-3 py-2 text-white hover:text-gray-300 transition-colors duration-200"
                     >
                       Docs
+                    </Link>
+                    <Link
+                      to="/howtowrite"
+                      className=" block w-full text-left px-3 py-2 text-white hover:text-gray-300 transition-colors duration-200"
+                    >
+                      How to Write CVs
                     </Link>
                     <Link
                       to="/signin"

@@ -36,12 +36,12 @@ function SignIn() {
     <>
       <Navbar />
       <div className="min-h-screen bg-gradient-to-br from-black via-zinc-900 to-zinc-800 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        <CiShare2 className="absolute top-1/4 left-1/3 text-9xl rotate-[200deg] text-white" />
-        <LuScreenShare className="absolute top-1/4 right-1/3 text-9xl rotate-[25deg] text-white" />
-        <FaKey className="absolute bottom-1/4 left-1/3 rotate-[350deg] text-9xl text-white" />
+        <CiShare2 className="absolute top-1/4 left-1/3 text-9xl rotate-[200deg] text-white  hidden lg:block" />
+        <LuScreenShare className="absolute top-1/4 right-1/3 text-9xl rotate-[25deg] text-white  hidden lg:block" />
+        <FaKey className="absolute bottom-1/4 left-1/3 rotate-[350deg] text-9xl text-white  hidden lg:block" />
         <LuPencilRuler
           className="absolute bottom-1/4 right-1/3 text-9xl
-        rotate-[340deg] text-white"
+        rotate-[340deg] text-white  hidden lg:block"
         />
         <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-cyan-600/10 to-blue-500/5 rounded-full blur-xl"></div>
         <div className="absolute bottom-32 right-16 w-32 h-32 bg-gradient-to-tl from-purple-600/10 to-pink-500/5 rounded-full blur-2xl"></div>

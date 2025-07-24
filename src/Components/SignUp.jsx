@@ -48,10 +48,10 @@ function SignUp() {
       <Navbar />
 
       <div className="min-h-screen bg-gradient-to-br from-black via-zinc-900 to-zinc-800 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        <SiReaddotcv className="absolute top-1/4 left-1/3 text-9xl rotate-[300deg] text-white" />
-        <FaLaptopCode className="absolute top-1/4 right-1/3 text-9xl rotate-[25deg] text-white" />
-        <FaBookOpen className="absolute bottom-1/4 left-1/3 rotate-[330deg] text-9xl text-white" />
-        <GiOpenFolder className="absolute bottom-1/4 right-1/3 text-9xl rotate-12 text-white" />
+        <SiReaddotcv className="absolute top-1/4 left-1/3 text-9xl rotate-[300deg] text-white hidden lg:block" />
+        <FaLaptopCode className="absolute top-1/4 right-1/3 text-9xl rotate-[25deg] text-white hidden lg:block" />
+        <FaBookOpen className="absolute bottom-1/4 left-1/3 rotate-[330deg] text-9xl text-white hidden lg:block" />
+        <GiOpenFolder className="absolute bottom-1/4 right-1/3 text-9xl rotate-12 text-white hidden lg:block" />
         <div className="absolute top-20 right-10 w-24 h-24 bg-gradient-to-br from-emerald-600/10 to-teal-500/5 rounded-full blur-xl"></div>
         <div className="absolute bottom-32 left-16 w-32 h-32 bg-gradient-to-tl from-purple-600/10 to-pink-500/5 rounded-full blur-2xl"></div>
         <div className="absolute top-1/3 right-1/4 w-16 h-16 bg-gradient-to-br from-cyan-600/8 to-blue-500/4 rounded-full blur-xl"></div>
