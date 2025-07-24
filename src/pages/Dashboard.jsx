@@ -15,6 +15,7 @@ function Dashboard() {
   const [togglingVisibility, setTogglingVisibility] = useState({});
   const [deletingCV, setDeletingCV] = useState({});
   const [deleteConfirm, setDeleteConfirm] = useState(null);
+  const [downloadingPDF, setDownloadingPDF] = useState({});
 
   const handleToggleVisibility = async (cvId) => {
     setTogglingVisibility((prev) => ({ ...prev, [cvId]: true }));
@@ -30,7 +31,6 @@ function Dashboard() {
       );
     } catch (error) {
       console.error("Error toggling CV visibility:", error);
-      // You could add a toast notification here
     } finally {
       setTogglingVisibility((prev) => ({ ...prev, [cvId]: false }));
     }
@@ -49,9 +49,189 @@ function Dashboard() {
       setDeleteConfirm(null);
     } catch (error) {
       console.error("Error deleting CV:", error);
-      // You could add a toast notification here
     } finally {
       setDeletingCV((prev) => ({ ...prev, [cvId]: false }));
+    }
+  };
+
+  const handleDownloadPDF = async (cv) => {
+    setDownloadingPDF((prev) => ({ ...prev, [cv.id]: true }));
+
+    try {
+      // Import jsPDF dynamically
+      const { default: jsPDF } = await import("jspdf");
+      const html2canvas = (await import("html2canvas")).default;
+
+      // Create a temporary container for the CV
+      const container = document.createElement("div");
+      container.style.position = "absolute";
+      container.style.left = "-9999px";
+      container.style.top = "0";
+      container.style.width = "210mm"; // A4 width
+      container.style.background = "#ffffff";
+      container.style.padding = "20mm";
+      container.style.fontFamily = "Arial, sans-serif";
+      container.style.fontSize = "12px";
+      container.style.lineHeight = "1.5";
+
+      // Create CV content HTML
+      const cvHTML = `
+        <div style="max-width: 100%; margin: 0 auto;">
+          <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #333; padding-bottom: 20px;">
+            <h1 style="margin: 0; font-size: 28px; color: #333;">${
+              cv.data.personalInfo?.fullName || "Untitled CV"
+            }</h1>
+            ${
+              cv.data.personalInfo?.email
+                ? `<p style="margin: 5px 0; color: #666;">${cv.data.personalInfo.email}</p>`
+                : ""
+            }
+            ${
+              cv.data.personalInfo?.phone
+                ? `<p style="margin: 5px 0; color: #666;">${cv.data.personalInfo.phone}</p>`
+                : ""
+            }
+            ${
+              cv.data.personalInfo?.location
+                ? `<p style="margin: 5px 0; color: #666;">${cv.data.personalInfo.location}</p>`
+                : ""
+            }
+          </div>
+          
+          ${
+            cv.data.personalInfo?.summary
+              ? `
+            <div style="margin-bottom: 25px;">
+              <h2 style="color: #333; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Professional Summary</h2>
+              <p style="margin: 10px 0; color: #555;">${cv.data.personalInfo.summary}</p>
+            </div>
+          `
+              : ""
+          }
+          
+          ${
+            cv.data.experience && cv.data.experience.length > 0
+              ? `
+            <div style="margin-bottom: 25px;">
+              <h2 style="color: #333; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Experience</h2>
+              ${cv.data.experience
+                .map(
+                  (exp) => `
+                <div style="margin: 15px 0;">
+                  <h3 style="margin: 0; color: #333;">${
+                    exp.position || "Position"
+                  }</h3>
+                  <p style="margin: 5px 0; color: #666; font-weight: bold;">${
+                    exp.company || "Company"
+                  } | ${exp.startDate || ""} - ${exp.endDate || "Present"}</p>
+                  ${
+                    exp.description
+                      ? `<p style="margin: 10px 0; color: #555;">${exp.description}</p>`
+                      : ""
+                  }
+                </div>
+              `
+                )
+                .join("")}
+            </div>
+          `
+              : ""
+          }
+          
+          ${
+            cv.data.education && cv.data.education.length > 0
+              ? `
+            <div style="margin-bottom: 25px;">
+              <h2 style="color: #333; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Education</h2>
+              ${cv.data.education
+                .map(
+                  (edu) => `
+                <div style="margin: 15px 0;">
+                  <h3 style="margin: 0; color: #333;">${
+                    edu.degree || "Degree"
+                  }</h3>
+                  <p style="margin: 5px 0; color: #666; font-weight: bold;">${
+                    edu.school || "School"
+                  } | ${edu.graduationDate || ""}</p>
+                  ${
+                    edu.description
+                      ? `<p style="margin: 10px 0; color: #555;">${edu.description}</p>`
+                      : ""
+                  }
+                </div>
+              `
+                )
+                .join("")}
+            </div>
+          `
+              : ""
+          }
+          
+          ${
+            cv.data.skills && cv.data.skills.length > 0
+              ? `
+            <div style="margin-bottom: 25px;">
+              <h2 style="color: #333; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Skills</h2>
+              <div style="margin: 10px 0;">
+                ${cv.data.skills
+                  .map(
+                    (skill) =>
+                      `<span style="display: inline-block; background: #f0f0f0; padding: 5px 10px; margin: 2px; border-radius: 5px; color: #333;">${
+                        skill.name || skill
+                      }</span>`
+                  )
+                  .join("")}
+              </div>
+            </div>
+          `
+              : ""
+          }
+        </div>
+      `;
+
+      container.innerHTML = cvHTML;
+      document.body.appendChild(container);
+
+      // Convert to canvas
+      const canvas = await html2canvas(container, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: false,
+        backgroundColor: "#ffffff",
+      });
+
+      // Remove temporary container
+      document.body.removeChild(container);
+
+      // Create PDF
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      const imgWidth = 210;
+      const pageHeight = 295;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+
+      let position = 0;
+
+      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      // Download the PDF
+      const fileName = `${
+        cv.data.personalInfo?.fullName || "CV"
+      }_${new Date().getFullYear()}.pdf`;
+      pdf.save(fileName);
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    } finally {
+      setDownloadingPDF((prev) => ({ ...prev, [cv.id]: false }));
     }
   };
 
@@ -561,6 +741,51 @@ function Dashboard() {
                                   Public
                                 </>
                               )}
+                            </>
+                          )}
+                        </button>
+
+                        <button
+                          onClick={() => handleDownloadPDF(cv)}
+                          disabled={downloadingPDF[cv.id]}
+                          className="flex items-center justify-center px-4 py-2 bg-purple-500/20 text-purple-300 border border-purple-500/30 rounded-lg hover:bg-purple-500/30 transition duration-200 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {downloadingPDF[cv.id] ? (
+                            <svg
+                              className="w-4 h-4 mr-2 animate-spin"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              ></circle>
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                              ></path>
+                            </svg>
+                          ) : (
+                            <>
+                              <svg
+                                className="w-4 h-4 mr-2"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                                />
+                              </svg>
+                              Download PDF
                             </>
                           )}
                         </button>
