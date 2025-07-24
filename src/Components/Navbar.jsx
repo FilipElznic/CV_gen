@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
+import { PiReadCvLogoBold } from "react-icons/pi";
+
 function Navbar() {
   const { currentUser, logout } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -27,6 +29,7 @@ function Navbar() {
             {/* Logo */}
             <div className="flex items-center">
               <Link to="/" className="flex items-center">
+                <PiReadCvLogoBold className="h-8 mr-2 text-white" />
                 <h1 className="text-xl font-bold text-white">CV Builder</h1>
               </Link>
             </div>
@@ -73,6 +76,12 @@ function Navbar() {
                     className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200"
                   >
                     Sign Up
+                  </Link>
+                  <Link
+                    to="/cv"
+                    className="text-white hover:text-gray-300 transition-colors duration-200"
+                  >
+                    Public CVs
                   </Link>
                 </>
               )}
@@ -124,6 +133,12 @@ function Navbar() {
                       Dashboard
                     </Link>
                     <Link
+                      to="/cv"
+                      className="text-white hover:text-gray-300 transition-colors duration-200"
+                    >
+                      Public CVs
+                    </Link>
+                    <Link
                       to="/create"
                       className="block px-3 py-2 text-gray-200 hover:text-gray-400  rounded-md transition-colors duration-200"
                       onClick={() => setIsMobileMenuOpen(false)}
@@ -139,6 +154,12 @@ function Navbar() {
                   </>
                 ) : (
                   <>
+                    <Link
+                      to="/cv"
+                      className="text-white hover:text-gray-300 transition-colors duration-200"
+                    >
+                      Public CVs
+                    </Link>
                     <Link
                       to="/signin"
                       className="block w-full text-left px-3 py-2 text-gray-200 hover:text-gray-400 rounded-md transition-colors duration-200"
