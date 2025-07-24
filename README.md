@@ -1,6 +1,6 @@
 # 📄 CV Generator
 
-A modern, full-stack web application for creating, managing, and sharing professional CVs. Built with React and Firebase, featuring an intuitive interface, multiple templates, and powerful sharing capabilities.
+A modern, full-stack web application for creating, and sharing professional CVs. Built with React and Firebase, featuring an intuitive interface, multiple templates, and powerful sharing capabilities.
 
 ![CV Generator](https://img.shields.io/badge/React-18.x-blue?style=for-the-badge&logo=react)
 ![Firebase](https://img.shields.io/badge/Firebase-9.x-orange?style=for-the-badge&logo=firebase)

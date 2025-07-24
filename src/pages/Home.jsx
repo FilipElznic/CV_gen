@@ -5,6 +5,7 @@ import FeaturesSection from "../Components/FeaturesSection";
 import HeroSection from "../Components/HeroSection";
 import HowItWorksSection from "../Components/HowItWorksSection";
 import PricingSection from "../Components/Pricing";
+import ShipwreckedSection from "../Components/ShipwreckedSection";
 
 // Reusable components for better structure
 
