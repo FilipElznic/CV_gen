@@ -1,10 +1,15 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import Navbar from "../components/Navbar";
+import Navbar from "../Components/Navbar";
+import { createCV, updateCV, getCV } from "../services/cvService";
 
 function Create() {
   const { currentUser } = useAuth();
+  const [searchParams] = useSearchParams();
+  const editCVId = searchParams.get("edit");
+  const [loading, setLoading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   // Predefined list of technologies
   const availableTechnologies = [
@@ -148,11 +153,11 @@ function Create() {
     },
     modern: {
       name: "Modern",
-      primary: "text-slate-900",
-      secondary: "text-slate-600",
+      primary: "text-slate-300",
+      secondary: "text-slate-100",
       accent: "text-cyan-500",
       border: "border-slate-200",
-      background: "bg-gradient-to-br from-slate-50 to-cyan-50",
+      background: "bg-zinc-800",
       headerBg: "bg-gradient-to-r from-cyan-500 to-blue-600",
       headerTextPrimary: "text-white",
       headerTextSecondary: "text-white/90",
@@ -183,7 +188,8 @@ function Create() {
       secondary: "text-purple-700",
       accent: "text-pink-600",
       border: "border-purple-200",
-      background: "bg-gradient-to-br from-purple-50 via-pink-50 to-purple-100",
+      background:
+        "bg-gradient-to-br from-purple-600 via-pink-600 to-purple-800",
       headerBg: "bg-gradient-to-r from-purple-600 to-pink-600",
       headerTextPrimary: "text-white",
       headerTextSecondary: "text-white/90",
@@ -283,6 +289,107 @@ function Create() {
       },
     ],
   });
+
+  // State for saving/loading functionality
+  const [currentCvId, setCurrentCvId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [saveStatus, setSaveStatus] = useState("");
+
+  // Load existing CV data if editing
+  useEffect(() => {
+    const loadCVForEditing = async () => {
+      if (editCVId && currentUser) {
+        setLoading(true);
+        setIsEditing(true);
+        try {
+          const cvDoc = await getCV(editCVId);
+          if (cvDoc && cvDoc.userId === currentUser.uid) {
+            setCvData(cvDoc.data);
+            setSelectedTheme(cvDoc.data.theme || "classic");
+            setCurrentCvId(editCVId);
+          } else {
+            console.error("CV not found or unauthorized");
+          }
+        } catch (error) {
+          console.error("Error loading CV for editing:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadCVForEditing();
+  }, [editCVId, currentUser]);
+
+  // Save CV to Firebase
+  const saveCV = async () => {
+    if (!currentUser) {
+      setSaveStatus("Please login to save your CV");
+      return;
+    }
+
+    setIsLoading(true);
+    setSaveStatus("");
+
+    try {
+      const cvDataWithTheme = { ...cvData, theme: selectedTheme };
+
+      if (currentCvId) {
+        // Update existing CV
+        await updateCV(currentCvId, cvDataWithTheme);
+        setSaveStatus("CV updated successfully!");
+      } else {
+        // Create new CV
+        const newCV = await createCV(currentUser.uid, cvDataWithTheme);
+        setCurrentCvId(newCV.id);
+        setSaveStatus("CV saved successfully!");
+      }
+    } catch (error) {
+      console.error("Error saving CV:", error);
+      setSaveStatus("Error saving CV. Please try again.");
+    } finally {
+      setIsLoading(false);
+      // Clear status after 3 seconds
+      setTimeout(() => setSaveStatus(""), 3000);
+    }
+  };
+
+  // Export CV data as JSON
+  const exportAsJSON = () => {
+    const dataStr = JSON.stringify(cvData, null, 2);
+    const dataUri =
+      "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
+
+    const exportFileDefaultName = `cv-${
+      cvData.personalInfo.fullName || "untitled"
+    }.json`;
+
+    const linkElement = document.createElement("a");
+    linkElement.setAttribute("href", dataUri);
+    linkElement.setAttribute("download", exportFileDefaultName);
+    linkElement.click();
+  };
+
+  // Import CV data from JSON
+  const importFromJSON = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const jsonData = JSON.parse(e.target.result);
+          setCvData(jsonData);
+          setSaveStatus("CV imported successfully!");
+          setTimeout(() => setSaveStatus(""), 3000);
+        } catch (error) {
+          console.error("Error parsing JSON:", error);
+          setSaveStatus("Error parsing JSON file. Please check the format.");
+          setTimeout(() => setSaveStatus(""), 3000);
+        }
+      };
+      reader.readAsText(file);
+    }
+  };
 
   const updatePersonalInfo = (field, value) => {
     setCvData((prev) => ({
@@ -484,6 +591,25 @@ function Create() {
     );
   }
 
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-gradient-to-br from-black via-zinc-900 to-zinc-800 flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-4 border-cyan-500 border-t-transparent mx-auto mb-4"></div>
+            <h1 className="text-2xl font-bold text-white mb-2">
+              {isEditing ? "Loading CV for editing..." : "Loading..."}
+            </h1>
+            <p className="text-gray-300">
+              Please wait while we prepare your CV builder
+            </p>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <Navbar />
@@ -492,7 +618,32 @@ function Create() {
           <div className="grid xl:grid-cols-2 gap-8">
             {/* CV Builder Form */}
             <div className="space-y-6 order-2 xl:order-1">
-              <h1 className="text-3xl font-bold text-white">Create Your CV</h1>
+              <div className="flex items-center justify-between">
+                <h1 className="text-3xl font-bold text-white">
+                  {isEditing ? "Edit Your CV" : "Create Your CV"}
+                </h1>
+                {isEditing && (
+                  <Link
+                    to="/dashboard"
+                    className="inline-flex items-center px-4 py-2 bg-gray-600/20 text-gray-300 border border-gray-600/30 rounded-lg hover:bg-gray-600/30 transition duration-200 text-sm font-medium"
+                  >
+                    <svg
+                      className="w-4 h-4 mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                      />
+                    </svg>
+                    Back to Dashboard
+                  </Link>
+                )}
+              </div>
 
               {/* Theme Selector */}
               <div className="bg-zinc-900/50 border border-zinc-700/50 p-6 rounded-lg shadow-xl backdrop-blur-sm">
@@ -525,6 +676,135 @@ function Create() {
                     </button>
                   ))}
                 </div>
+              </div>
+
+              {/* Save/Load/Export Section */}
+              <div className="bg-zinc-900/50 border border-zinc-700/50 p-6 rounded-lg shadow-xl backdrop-blur-sm">
+                <h2 className="text-xl font-semibold mb-4 text-white">
+                  Save & Load CV
+                </h2>
+
+                {/* Status Message */}
+                {saveStatus && (
+                  <div
+                    className={`mb-4 p-3 rounded-lg text-sm ${
+                      saveStatus.includes("Error") ||
+                      saveStatus.includes("not found")
+                        ? "bg-red-500/20 text-red-300 border border-red-500/30"
+                        : "bg-green-500/20 text-green-300 border border-green-500/30"
+                    }`}
+                  >
+                    {saveStatus}
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                  {/* Save to Firebase */}
+                  <button
+                    onClick={saveCV}
+                    disabled={isLoading}
+                    className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg transition duration-200"
+                  >
+                    {isLoading ? (
+                      <span className="animate-spin">⏳</span>
+                    ) : (
+                      "💾"
+                    )}
+                    {currentCvId ? "Update CV" : "Save CV"}
+                  </button>
+
+                  {/* Export as JSON */}
+                  <button
+                    onClick={exportAsJSON}
+                    className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition duration-200"
+                  >
+                    📥 Export JSON
+                  </button>
+
+                  {/* Import from JSON */}
+                  <label className="flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition duration-200 cursor-pointer">
+                    📤 Import JSON
+                    <input
+                      type="file"
+                      accept=".json"
+                      onChange={importFromJSON}
+                      className="hidden"
+                    />
+                  </label>
+
+                  {/* New CV */}
+                  <button
+                    onClick={() => {
+                      setCvData({
+                        personalInfo: {
+                          fullName: "",
+                          email: "",
+                          phone: "",
+                          location: "",
+                          website: "",
+                          summary: "",
+                          about: "",
+                        },
+                        experience: [
+                          {
+                            id: 1,
+                            title: "",
+                            company: "",
+                            location: "",
+                            startDate: "",
+                            endDate: "",
+                            current: false,
+                            description: "",
+                          },
+                        ],
+                        education: [
+                          {
+                            id: 1,
+                            degree: "",
+                            institution: "",
+                            location: "",
+                            startDate: "",
+                            endDate: "",
+                            gpa: "",
+                          },
+                        ],
+                        skills: [],
+                        projects: [
+                          {
+                            id: 1,
+                            name: "",
+                            description: "",
+                            technologies: "",
+                            link: "",
+                          },
+                        ],
+                        certifications: [],
+                        languages: [
+                          {
+                            id: 1,
+                            language: "",
+                            proficiency: "",
+                          },
+                        ],
+                      });
+                      setCurrentCvId(null);
+                      setSaveStatus("");
+                    }}
+                    className="flex items-center justify-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition duration-200"
+                  >
+                    🆕 New CV
+                  </button>
+                </div>
+
+                {/* Current CV Info */}
+                {currentCvId && (
+                  <div className="mt-4 p-3 bg-zinc-800/50 rounded-lg border border-zinc-600">
+                    <p className="text-white text-sm">
+                      <span className="text-cyan-400">Current CV ID:</span>{" "}
+                      {currentCvId}
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* Personal Information */}
@@ -741,7 +1021,7 @@ function Create() {
                           exp.location ? "text-gray-400" : "text-white"
                         } placeholder-gray-400 focus:ring-cyan-500 focus:border-cyan-500 transition duration-200`}
                       />
-                      <div className="flex space-x-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         <input
                           type="month"
                           placeholder="Start Date"
@@ -753,7 +1033,7 @@ function Create() {
                               e.target.value
                             )
                           }
-                          className={`flex-1 p-3 bg-zinc-800 border border-zinc-600 rounded-md ${
+                          className={`w-full p-3 bg-zinc-800 border border-zinc-600 rounded-md ${
                             exp.startDate ? "text-gray-400" : "text-white"
                           } placeholder-gray-400 focus:ring-cyan-500 focus:border-cyan-500 transition duration-200`}
                         />
@@ -765,7 +1045,7 @@ function Create() {
                             updateExperience(exp.id, "endDate", e.target.value)
                           }
                           disabled={exp.current}
-                          className={`flex-1 p-3 bg-zinc-800 border border-zinc-600 rounded-md ${
+                          className={`w-full p-3 bg-zinc-800 border border-zinc-600 rounded-md ${
                             exp.endDate ? "text-gray-400" : "text-white"
                           } placeholder-gray-400 focus:ring-cyan-500 focus:border-cyan-500 disabled:bg-zinc-700 disabled:text-gray-500 transition duration-200`}
                         />
@@ -875,28 +1155,30 @@ function Create() {
                           edu.gpa ? "text-gray-400" : "text-white"
                         } placeholder-gray-400 focus:ring-cyan-500 focus:border-cyan-500 transition duration-200`}
                       />
-                      <input
-                        type="month"
-                        placeholder="Start Date"
-                        value={edu.startDate}
-                        onChange={(e) =>
-                          updateEducation(edu.id, "startDate", e.target.value)
-                        }
-                        className={`w-full p-3 bg-zinc-800 border border-zinc-600 rounded-md ${
-                          edu.startDate ? "text-gray-400" : "text-white"
-                        } placeholder-gray-400 focus:ring-cyan-500 focus:border-cyan-500 transition duration-200`}
-                      />
-                      <input
-                        type="month"
-                        placeholder="End Date"
-                        value={edu.endDate}
-                        onChange={(e) =>
-                          updateEducation(edu.id, "endDate", e.target.value)
-                        }
-                        className={`w-full p-3 bg-zinc-800 border border-zinc-600 rounded-md ${
-                          edu.endDate ? "text-gray-400" : "text-white"
-                        } placeholder-gray-400 focus:ring-cyan-500 focus:border-cyan-500 transition duration-200`}
-                      />
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:col-span-2">
+                        <input
+                          type="month"
+                          placeholder="Start Date"
+                          value={edu.startDate}
+                          onChange={(e) =>
+                            updateEducation(edu.id, "startDate", e.target.value)
+                          }
+                          className={`w-full p-3 bg-zinc-800 border border-zinc-600 rounded-md ${
+                            edu.startDate ? "text-gray-400" : "text-white"
+                          } placeholder-gray-400 focus:ring-cyan-500 focus:border-cyan-500 transition duration-200`}
+                        />
+                        <input
+                          type="month"
+                          placeholder="End Date"
+                          value={edu.endDate}
+                          onChange={(e) =>
+                            updateEducation(edu.id, "endDate", e.target.value)
+                          }
+                          className={`w-full p-3 bg-zinc-800 border border-zinc-600 rounded-md ${
+                            edu.endDate ? "text-gray-400" : "text-white"
+                          } placeholder-gray-400 focus:ring-cyan-500 focus:border-cyan-500 transition duration-200`}
+                        />
+                      </div>
                     </div>
                     {cvData.education.length > 1 && (
                       <button
@@ -1417,8 +1699,10 @@ function Create() {
                         >
                           {cvData.certifications.map((cert, index) => (
                             <li key={index} className="flex items-start">
-                              <span className="mr-2">•</span>
-                              <span className="break-words">{cert}</span>
+                              <span className="mr-2 flex-shrink-0">•</span>
+                              <span className="break-words break-all leading-relaxed">
+                                {cert}
+                              </span>
                             </li>
                           ))}
                         </ul>

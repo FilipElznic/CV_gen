@@ -15,13 +15,38 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Validate Firebase configuration
+const validateConfig = () => {
+  const requiredFields = ["apiKey", "authDomain", "projectId"];
+  const missingFields = requiredFields.filter(
+    (field) => !firebaseConfig[field]
+  );
 
-// Initialize Firebase Authentication and get a reference to the service
-export const auth = getAuth(app);
+  if (missingFields.length > 0) {
+    console.error("Missing Firebase configuration:", missingFields);
+    console.error(
+      "Please check your .env file and ensure all required variables are set."
+    );
+    return false;
+  }
 
-// Initialize Cloud Firestore and get a reference to the service
-export const db = getFirestore(app);
+  return true;
+};
 
+// Initialize Firebase only if configuration is valid
+let app, auth, db;
+
+if (validateConfig()) {
+  try {
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+  } catch (error) {
+    console.error("Error initializing Firebase:", error);
+  }
+} else {
+  console.error("Firebase initialization skipped due to invalid configuration");
+}
+
+export { auth, db };
 export default app;

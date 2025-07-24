@@ -1,25 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import AuthModal from "./AuthModal";
 
 function Navbar() {
   const { currentUser, logout } = useAuth();
-  const [showAuthModal, setShowAuthModal] = useState(false);
-  const [authMode, setAuthMode] = useState("signin");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const handleSignIn = () => {
-    setAuthMode("signin");
-    setShowAuthModal(true);
-    setIsMobileMenuOpen(false);
-  };
-
-  const handleSignUp = () => {
-    setAuthMode("signup");
-    setShowAuthModal(true);
-    setIsMobileMenuOpen(false);
-  };
 
   const handleLogout = async () => {
     try {
@@ -71,18 +56,18 @@ function Navbar() {
                 </>
               ) : (
                 <>
-                  <button
-                    onClick={handleSignIn}
-                    className="text-gray-700 hover:text-gray-900 transition-colors duration-200"
+                  <Link
+                    to="/signin"
+                    className="text-white hover:text-gray-300 transition-colors duration-200"
                   >
                     Sign In
-                  </button>
-                  <button
-                    onClick={handleSignUp}
+                  </Link>
+                  <Link
+                    to="/signup"
                     className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200"
                   >
                     Sign Up
-                  </button>
+                  </Link>
                 </>
               )}
             </div>
@@ -148,18 +133,20 @@ function Navbar() {
                   </>
                 ) : (
                   <>
-                    <button
-                      onClick={handleSignIn}
-                      className="block w-full text-left px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                    <Link
+                      to="/signin"
+                      className="block w-full text-left px-3 py-2 text-gray-200 hover:text-gray-400 rounded-md transition-colors duration-200"
+                      onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Sign In
-                    </button>
-                    <button
-                      onClick={handleSignUp}
+                    </Link>
+                    <Link
+                      to="/signup"
                       className="block w-full text-left px-3 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-md transition-colors duration-200"
+                      onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Sign Up
-                    </button>
+                    </Link>
                   </>
                 )}
               </div>
@@ -167,13 +154,6 @@ function Navbar() {
           )}
         </div>
       </nav>
-
-      {/* Authentication Modal */}
-      <AuthModal
-        isOpen={showAuthModal}
-        onClose={() => setShowAuthModal(false)}
-        mode={authMode}
-      />
     </>
   );
 }

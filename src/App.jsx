@@ -1,12 +1,15 @@
 import "./index.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
+import { PublicRoute, PrivateRoute } from "./components/ProtectedRoute";
 import Home from "./pages/Home";
 import Create from "./pages/Create";
 import Dashboard from "./pages/Dashboard";
 import PublicCV from "./pages/PublicCV";
 import Footer from "./Components/Footer";
-
+import SignIn from "./Components/SignIn";
+import SignUp from "./Components/SignUp";
+import PrivacyPolicy from "./Components/Privacypol";
 function App() {
   return (
     <AuthProvider>
@@ -17,13 +20,44 @@ function App() {
               {/* Home / Landing page */}
               <Route path="/" element={<Home />} />
 
-              {/* CV Builder */}
-              <Route path="/create" element={<Create />} />
+              {/* Authentication pages - redirect to dashboard if logged in */}
+              <Route
+                path="/signin"
+                element={
+                  <PublicRoute>
+                    <SignIn />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="/signup"
+                element={
+                  <PublicRoute>
+                    <SignUp />
+                  </PublicRoute>
+                }
+              />
 
-              {/* User's saved CVs */}
-              <Route path="/dashboard" element={<Dashboard />} />
+              {/* Protected pages - require authentication */}
+              <Route
+                path="/create"
+                element={
+                  <PrivateRoute>
+                    <Create />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/dashboard"
+                element={
+                  <PrivateRoute>
+                    <Dashboard />
+                  </PrivateRoute>
+                }
+              />
 
-              {/* Public CV view */}
+              {/* Public CV view - no authentication required */}
+              <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/cv/:slug" element={<PublicCV />} />
             </Routes>
           </div>

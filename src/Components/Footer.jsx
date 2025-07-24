@@ -68,7 +68,9 @@ const Footer = () => {
 
           {/* Social Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Connect With Us</h3>
+            <h3 className="text-lg font-semibold mb-4 text-white">
+              Connect With Us
+            </h3>
             <div className="flex space-x-4">
               <a
                 href="https://github.com/FilipElznic"
@@ -99,7 +101,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="mt-8 pt-4 border-t border-gray-200 text-center text-white text-sm">
           <div className="mb-2">
-            © {currentYear} Learning App. All rights reserved.
+            © {currentYear} CV Generator. All rights reserved.
           </div>
         </div>
       </div>

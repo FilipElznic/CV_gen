@@ -16,6 +16,33 @@ import { v4 as uuidv4 } from "uuid";
 
 const CV_COLLECTION = "cvs";
 
+// Error handling and retry logic
+const withRetry = async (operation, maxRetries = 3, delay = 1000) => {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await operation();
+    } catch (error) {
+      console.warn(`Attempt ${attempt} failed:`, error.message);
+
+      if (attempt === maxRetries) {
+        throw error;
+      }
+
+      // Wait before retrying
+      await new Promise((resolve) => setTimeout(resolve, delay * attempt));
+    }
+  }
+};
+
+// Check if Firebase is properly initialized
+const checkFirebaseConnection = () => {
+  if (!db) {
+    throw new Error(
+      "Firebase is not properly initialized. Please check your configuration."
+    );
+  }
+};
+
 // Generate a unique slug for the CV
 function generateSlug(fullName) {
   const base = fullName
@@ -28,9 +55,11 @@ function generateSlug(fullName) {
   return `${base}-${uuidv4().slice(0, 8)}`;
 }
 
-// Create a new CV
+// Create a new CV with retry logic
 export async function createCV(userId, cvData, isPublic = false) {
-  try {
+  checkFirebaseConnection();
+
+  return withRetry(async () => {
     const slug = generateSlug(cvData.personalInfo?.fullName);
 
     const cv = {
@@ -44,15 +73,14 @@ export async function createCV(userId, cvData, isPublic = false) {
 
     const docRef = await addDoc(collection(db, CV_COLLECTION), cv);
     return { id: docRef.id, ...cv };
-  } catch (error) {
-    console.error("Error creating CV:", error);
-    throw error;
-  }
+  });
 }
 
-// Update an existing CV
+// Update an existing CV with retry logic
 export async function updateCV(cvId, cvData, isPublic) {
-  try {
+  checkFirebaseConnection();
+
+  return withRetry(async () => {
     const cvRef = doc(db, CV_COLLECTION, cvId);
     const updateData = {
       data: cvData,
@@ -65,10 +93,7 @@ export async function updateCV(cvId, cvData, isPublic) {
 
     await updateDoc(cvRef, updateData);
     return true;
-  } catch (error) {
-    console.error("Error updating CV:", error);
-    throw error;
-  }
+  });
 }
 
 // Delete a CV

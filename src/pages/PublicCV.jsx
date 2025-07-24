@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getPublicCV } from "../services/cvService";
-import Navbar from "../components/Navbar";
+import Navbar from "../Components/Navbar";
 
 function PublicCV() {
   const { slug } = useParams();
@@ -33,7 +33,7 @@ function PublicCV() {
     return (
       <>
         <Navbar />
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="min-h-screen bg-gradient-to-r from-zinc-900/50 to-zinc-800/30 flex items-center justify-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
         </div>
       </>
@@ -44,7 +44,7 @@ function PublicCV() {
     return (
       <>
         <Navbar />
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="min-h-screen bg-gradient-to-r from-zinc-900/50 to-zinc-800/30 flex items-center justify-center">
           <div className="bg-white p-8 rounded shadow text-center">
             <h2 className="text-2xl font-bold text-red-600 mb-4">{error}</h2>
             <Link to="/" className="text-blue-600 hover:underline">
@@ -61,31 +61,8 @@ function PublicCV() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-gradient-to-r from-zinc-900/50 to-zinc-800/30 py-8">
         {/* Header */}
-        <div className="bg-white shadow-sm">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-              <Link to="/" className="text-xl font-bold text-gray-900">
-                CV Builder
-              </Link>
-              <div className="flex space-x-4">
-                <button
-                  onClick={() => window.print()}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-                >
-                  Print CV
-                </button>
-                <Link
-                  to="/create"
-                  className="text-gray-700 hover:text-gray-900"
-                >
-                  Create Your CV
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* CV Content */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

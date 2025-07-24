@@ -22,27 +22,18 @@ const FAQ = () => {
     {
       question: "How many CV templates are available?",
       answer:
-        "We offer over 20 professionally designed templates ranging from modern and creative designs to traditional and corporate styles. All templates are ATS-friendly and optimized for different industries.",
+        "We offer 5 designed templates ranging from modern and creative designs to traditional and corporate styles. All templates are ATS-friendly and optimized for different industries.",
     },
     {
       question: "Can I download my CV as a PDF?",
       answer:
         "Absolutely! You can download your completed CV as a high-quality PDF file. We also provide options to export in different formats and generate a shareable link that you can send directly to employers.",
     },
-    {
-      question: "Is my personal data secure?",
-      answer:
-        "Your privacy and data security are our top priorities. All data is encrypted and stored securely in the cloud. We never share your personal information with third parties, and you have full control over your data at all times.",
-    },
+
     {
       question: "Can I edit my CV after creating it?",
       answer:
         "Yes! You can edit, update, and modify your CV anytime. All your CVs are automatically saved to your account, making it easy to keep them current with your latest achievements and experiences.",
-    },
-    {
-      question: "Do the templates work with Applicant Tracking Systems (ATS)?",
-      answer:
-        "All our templates are designed to be ATS-friendly. This means they use proper formatting and structure that can be easily read by applicant tracking systems used by most employers.",
     },
     {
       question: "Can I create multiple CVs for different jobs?",
@@ -54,11 +45,7 @@ const FAQ = () => {
       answer:
         "You have several sharing options: download as PDF and attach to emails, generate a unique shareable link, or print directly from the platform. The shareable link is perfect for online applications and social media profiles.",
     },
-    {
-      question: "What if I need help creating my CV?",
-      answer:
-        "We provide comprehensive guides, tips, and examples throughout the builder process. Our platform includes helpful prompts and suggestions to ensure you create a compelling CV that stands out to employers.",
-    },
+
     {
       question: "Can I use the CV builder on my mobile device?",
       answer:
@@ -67,7 +54,7 @@ const FAQ = () => {
   ];
 
   return (
-    <div className="w-full  py-16 sm:py-20">
+    <div className="w-full  py-16 sm:py-20" id="faq">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12 sm:mb-16">
@@ -143,12 +130,12 @@ const FAQ = () => {
               Our support team is here to help you create the perfect CV
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 sm:px-8 py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-cyan-600 hover:to-blue-700 transition duration-200 shadow-lg hover:shadow-cyan-500/25 w-full sm:w-auto">
+              <a
+                href="mailto:elznicfilip@gmail.com"
+                className="inline-block bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 sm:px-8 py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-cyan-600 hover:to-blue-700 transition duration-200 shadow-lg hover:shadow-cyan-500/25 w-full sm:w-auto text-center"
+              >
                 Contact Support
-              </button>
-              <button className="bg-transparent text-cyan-400 px-6 sm:px-8 py-3 rounded-lg text-sm sm:text-base font-semibold border-2 border-cyan-500 hover:bg-cyan-500/10 transition duration-200 w-full sm:w-auto">
-                View Help Center
-              </button>
+              </a>
             </div>
           </div>
         </div>
