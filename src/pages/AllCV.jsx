@@ -139,11 +139,11 @@ function AllCV() {
       <Navbar />
       <div className="w-full min-h-screen bg-gradient-to-br from-black via-zinc-900 to-zinc-800 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl md:text-5xl xl:text-8xl font-extrabold tracking-wider my-8 text-center text-gray-100 border-b-2 border-gray-700 pb-4 ">
+          <h1 className="text-5xl md:text-7xl font-extralight mb-6 text-gray-100 tracking-tight text-center">
             All Public CVs
           </h1>
-
-          <p className="text-gray-400 text-center mb-8 w-full md:w-1/2 mx-auto text-sm lg:text-xl">
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-8"></div>
+          <p className="text-xl text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed text-center">
             On this page, you can view all public CVs created by users. Click on
             a CV to view it in detail. You can take inspiration from these CVs
             to create your own CV. If you want to create a CV.

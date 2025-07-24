@@ -5,6 +5,7 @@ import Navbar from "../Components/Navbar";
 
 function PublicCV() {
   const { slug } = useParams();
+
   const [cv, setCv] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

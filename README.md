@@ -13,9 +13,7 @@ A modern, full-stack web application for creating, and sharing professional CVs.
 
 - Interactive form-based CV creation
 - Real-time preview and editing
-- Multiple professional templates
-- Customizable color schemes
-- Drag-and-drop section reordering
+- Multiple color tempelates
 
 ### 👤 **User Management**
 
@@ -33,17 +31,15 @@ A modern, full-stack web application for creating, and sharing professional CVs.
 
 ### 📚 **Educational Resources**
 
-- Interactive CV writing guide with Chart.js visualizations
 - ATS optimization tips and best practices
 - Data-driven insights on CV effectiveness
 - Industry-specific advice and examples
 
 ### 📊 **Analytics & Features**
 
-- View tracking for public CVs
-- Performance metrics and statistics
+- View all public CVs at one plcae
+- Preview statistics
 - Export capabilities (PDF, sharing links)
-- Version control and CV history
 
 ## 🚀 Quick Start
 
@@ -144,16 +140,9 @@ src/
 
 ### Development Tools
 
-- **ESLint** - Code linting and quality
 - **PostCSS** - CSS processing
 - **Git** - Version control
 - **npm** - Package management
-
-### Key Libraries
-
-- **uuid** - Unique identifier generation
-- **@tailwindcss/line-clamp** - Text truncation utility
-- **React Context API** - State management
 
 ## 🎯 Usage Guide
 
@@ -161,8 +150,8 @@ src/
 
 1. **Sign up** for a new account or **log in** to existing account
 2. Navigate to **"Create CV"** from the dashboard
-3. Fill in your personal information, experience, education, and skills
-4. Choose from available templates and customize colors
+3. Fill in your personal information, experience, education...
+4. Choose from available templates
 5. Preview your CV in real-time
 6. Save and optionally make it public for sharing
 
@@ -283,7 +272,7 @@ If you encounter any issues or have questions:
 
 ## 🔗 Links
 
-- **Live Demo**: [CV Generator](https://your-deployment-url.com)
+- **Live Demo**: [CV Generator](https://cv-gen-rho.vercel.app/)
 - **Firebase Console**: [Firebase](https://console.firebase.google.com/)
 - **React Documentation**: [React Docs](https://react.dev/)
 - **Tailwind CSS**: [Tailwind Docs](https://tailwindcss.com/)
