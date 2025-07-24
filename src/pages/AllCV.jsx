@@ -20,7 +20,7 @@ function AllCV() {
     hasProjects: false,
     sortBy: "newest", // newest, oldest, name
   });
-  const [showFilters, setShowFilters] = useState(false);
+  const [showFilters, setShowFilters] = useState(true);
 
   useEffect(() => {
     const fetchPublicCVs = async () => {
@@ -393,7 +393,7 @@ function AllCV() {
                     key={cv.id}
                     className={`bg-gradient-to-b from-zinc-700 to-zinc-500 rounded-2xl shadow-xl transition-all duration-300 p-6 min-h-[450px] cursor-pointer hover:shadow-2xl hover:scale-105 transform flex flex-col ${
                       isOwner
-                        ? "border-4 border-green-900 ring-2 ring-green-950r-200"
+                        ? "border-4 border-black ring-2 shadow-xl "
                         : "border border-gray-200 hover:border-zinc-400"
                     }`}
                     onClick={() => openCV(cv.slug)}

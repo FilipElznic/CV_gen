@@ -27,62 +27,98 @@ function Navbar() {
         <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             {/* Logo */}
-            <div className="flex items-center">
-              <Link to="/" className="flex items-center">
-                <PiReadCvLogoBold className="h-8 mr-2 text-white" />
-                <h1 className="text-xl font-bold text-white">CV Builder</h1>
-              </Link>
-            </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-6 ">
+            <div className="hidden md:flex  space-x-6 w-full ">
               {currentUser ? (
-                <>
-                  <Link
-                    to="/dashboard"
-                    className="text-white hover:text-gray-300 transition-colors duration-200"
-                  >
-                    Dashboard
-                  </Link>
-                  <Link
-                    to="/cv"
-                    className="text-white hover:text-gray-300 transition-colors duration-200"
-                  >
-                    Public CVs
-                  </Link>
-                  <Link
-                    to="/create"
-                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200"
-                  >
-                    Create CV
-                  </Link>
-                  <button
-                    onClick={handleLogout}
-                    className="text-white hover:text-red-600 transition-colors duration-200"
-                  >
-                    Sign Out
-                  </button>
-                </>
+                <div className="flex items-center flex-row justify-between w-full">
+                  <div className="flex items-center">
+                    <Link to="/" className="flex items-center">
+                      <PiReadCvLogoBold className="h-10 mr-2 text-white" />
+                      <h1 className="text-xl font-bold text-white">
+                        CV Builder
+                      </h1>
+                    </Link>
+                  </div>
+                  <div className="flex items-center space-x-4 ">
+                    <Link
+                      to="/dashboard"
+                      className="text-white hover:text-gray-300 transition-colors duration-200"
+                    >
+                      Dashboard
+                    </Link>
+                    <Link
+                      to="/cv"
+                      className="text-white hover:text-gray-300 transition-colors duration-200"
+                    >
+                      Public CVs
+                    </Link>
+                    <Link
+                      to="/howtowrite"
+                      className="text-white hover:text-gray-300 transition-colors duration-200"
+                    >
+                      How to Write CVs
+                    </Link>
+                  </div>
+                  <div className="flex items-center space-x-4 ">
+                    <Link
+                      to="/create"
+                      className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200"
+                    >
+                      Create CV
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="text-white hover:text-red-600 transition-colors duration-200"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                </div>
               ) : (
                 <>
-                  <Link
-                    to="/signin"
-                    className="text-white hover:text-gray-300 transition-colors duration-200"
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    to="/signup"
-                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200"
-                  >
-                    Sign Up
-                  </Link>
-                  <Link
-                    to="/cv"
-                    className="text-white hover:text-gray-300 transition-colors duration-200"
-                  >
-                    Public CVs
-                  </Link>
+                  <div className="flex items-center flex-row justify-between w-full">
+                    <Link to="/" className="flex items-center">
+                      <PiReadCvLogoBold className="h-10 mr-2 text-white" />
+                      <h1 className="text-xl font-bold text-white">
+                        CV Builder
+                      </h1>
+                    </Link>
+                    <div className="flex items-center space-x-8">
+                      <Link
+                        to="/cv"
+                        className="text-white hover:text-gray-300 transition-colors duration-200"
+                      >
+                        Public CVs
+                      </Link>
+                      <Link
+                        to="/howtowrite"
+                        className="text-white hover:text-gray-300 transition-colors duration-200"
+                      >
+                        How to Write CVs
+                      </Link>
+                      <Link
+                        to="/docs"
+                        className="text-white hover:text-gray-300 transition-colors duration-200"
+                      >
+                        Docs
+                      </Link>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                      <Link
+                        to="/signin"
+                        className="text-white hover:text-gray-300 transition-colors duration-200"
+                      >
+                        Sign In
+                      </Link>
+                      <Link
+                        to="/signup"
+                        className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200"
+                      >
+                        Sign Up
+                      </Link>
+                    </div>
+                  </div>
                 </>
               )}
             </div>
@@ -139,6 +175,18 @@ function Navbar() {
                       Public CVs
                     </Link>
                     <Link
+                      to="/howtowrite"
+                      className="text-white hover:text-gray-300 transition-colors duration-200"
+                    >
+                      How to Write CVs
+                    </Link>
+                    <Link
+                      to="/docs"
+                      className="text-white hover:text-gray-300 transition-colors duration-200"
+                    >
+                      Docs
+                    </Link>
+                    <Link
                       to="/create"
                       className="block px-3 py-2 text-gray-200 hover:text-gray-400  rounded-md transition-colors duration-200"
                       onClick={() => setIsMobileMenuOpen(false)}
@@ -159,6 +207,12 @@ function Navbar() {
                       className="text-white hover:text-gray-300 transition-colors duration-200"
                     >
                       Public CVs
+                    </Link>
+                    <Link
+                      to="/docs"
+                      className="text-white hover:text-gray-300 transition-colors duration-200"
+                    >
+                      Docs
                     </Link>
                     <Link
                       to="/signin"

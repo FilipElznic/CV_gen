@@ -11,6 +11,8 @@ import SignIn from "./Components/SignIn";
 import SignUp from "./Components/SignUp";
 import PrivacyPolicy from "./Components/Privacypol";
 import AllCV from "./pages/AllCV";
+import HowToWrite from "./pages/Howtowrite";
+import Docs from "./pages/Docs";
 
 function App() {
   return (
@@ -59,7 +61,10 @@ function App() {
               />
 
               {/* Public CV view - no authentication required */}
+              <Route path="/howtowrite" element={<HowToWrite />} />
+              <Route path="/docs" element={<Docs />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/how-to-write" element={<HowToWrite />} />
               <Route path="/cv/:slug" element={<PublicCV />} />
               <Route path="/cv" element={<AllCV />} />
             </Routes>

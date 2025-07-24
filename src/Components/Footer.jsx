@@ -69,7 +69,7 @@ const Footer = () => {
           {/* Social Links */}
           <div>
             <h3 className="text-lg font-semibold mb-4 text-white">
-              Connect With Us
+              Connect With Creator
             </h3>
             <div className="flex space-x-4">
               <a
