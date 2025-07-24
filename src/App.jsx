@@ -1,5 +1,6 @@
 import "./index.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { AuthProvider } from "./contexts/AuthContext";
 import { PublicRoute, PrivateRoute } from "./Components/ProtectedRoute";
 import Home from "./pages/Home";
@@ -15,10 +16,25 @@ import HowToWrite from "./pages/HowToWrite";
 import Docs from "./pages/Docs";
 
 function App() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Trigger fade-in animation after component mounts
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 100); // Small delay to ensure smooth animation
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen flex flex-col">
+        <div
+          className={`min-h-screen flex flex-col transition-all duration-1000 ease-out transform ${
+            isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
           <div className="flex-grow">
             <Routes>
               {/* Home / Landing page */}
