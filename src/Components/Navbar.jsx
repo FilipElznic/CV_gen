@@ -32,7 +32,7 @@ function Navbar() {
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-6">
+            <div className="hidden md:flex items-center space-x-6 ">
               {currentUser ? (
                 <>
                   <Link
@@ -40,6 +40,12 @@ function Navbar() {
                     className="text-white hover:text-gray-300 transition-colors duration-200"
                   >
                     Dashboard
+                  </Link>
+                  <Link
+                    to="/cv"
+                    className="text-white hover:text-gray-300 transition-colors duration-200"
+                  >
+                    Public CVs
                   </Link>
                   <Link
                     to="/create"

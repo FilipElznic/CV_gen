@@ -182,6 +182,26 @@ export async function toggleCVVisibility(cvId) {
   }
 }
 
+// Get all public CVs
+export async function getAllPublicCVs() {
+  try {
+    const q = query(
+      collection(db, CV_COLLECTION),
+      where("isPublic", "==", true),
+      orderBy("updatedAt", "desc")
+    );
+
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (error) {
+    console.error("Error fetching public CVs:", error);
+    throw error;
+  }
+}
+
 // Get public CV URL
 export function getPublicCVUrl(slug) {
   return `${window.location.origin}/cv/${slug}`;

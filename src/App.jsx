@@ -1,7 +1,7 @@
 import "./index.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
-import { PublicRoute, PrivateRoute } from "./components/ProtectedRoute";
+import { PublicRoute, PrivateRoute } from "./Components/ProtectedRoute";
 import Home from "./pages/Home";
 import Create from "./pages/Create";
 import Dashboard from "./pages/Dashboard";
@@ -10,6 +10,8 @@ import Footer from "./Components/Footer";
 import SignIn from "./Components/SignIn";
 import SignUp from "./Components/SignUp";
 import PrivacyPolicy from "./Components/Privacypol";
+import AllCV from "./pages/AllCV";
+
 function App() {
   return (
     <AuthProvider>
@@ -59,6 +61,7 @@ function App() {
               {/* Public CV view - no authentication required */}
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/cv/:slug" element={<PublicCV />} />
+              <Route path="/cv" element={<AllCV />} />
             </Routes>
           </div>
           <Footer />
