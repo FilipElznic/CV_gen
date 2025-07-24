@@ -2,13 +2,183 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/src/assets/cvicon.png" />
     <title>CV generator</title>
+    <style>
+      /* Loading Screen Styles */
+      #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom right, #000000, #18181b, #27272a);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease-out;
+      }
+
+      #loading-screen.fade-out {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* Futuristic Loading Animation */
+      .loader-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .loader {
+        width: 80px;
+        height: 80px;
+        border: 3px solid rgba(59, 130, 246, 0.2);
+        border-top: 3px solid #3b82f6;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        position: relative;
+      }
+
+      .loader::before {
+        content: "";
+        position: absolute;
+        top: -3px;
+        left: -3px;
+        right: -3px;
+        bottom: -3px;
+        border: 2px solid transparent;
+        border-top: 2px solid #60a5fa;
+        border-radius: 50%;
+        animation: spin 2s linear infinite reverse;
+      }
+
+      .loader::after {
+        content: "";
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        right: 6px;
+        bottom: 6px;
+        border: 2px solid rgba(147, 197, 253, 0.3);
+        border-top: 2px solid #93c5fd;
+        border-radius: 50%;
+        animation: spin 0.5s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loading-text {
+        color: #3b82f6;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 1.2rem;
+        font-weight: 300;
+        letter-spacing: 0.1em;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.6;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      .loading-dots {
+        display: flex;
+        gap: 4px;
+        margin-top: 1rem;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        background: #3b82f6;
+        border-radius: 50%;
+        animation: dotPulse 1.5s ease-in-out infinite;
+      }
+
+      .dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes dotPulse {
+        0%,
+        60%,
+        100% {
+          transform: scale(0.8);
+          opacity: 0.5;
+        }
+        30% {
+          transform: scale(1.2);
+          opacity: 1;
+        }
+      }
+    </style>
   </head>
   <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+      <div class="loader-container">
+        <div class="loader"></div>
+        <div class="loading-text">CV Generator</div>
+        <div class="loading-dots">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+
     <div id="root"></div>
+
     <script type="module" src="/src/main.jsx"></script>
+
+    <script>
+      // Hide loading screen when React app is ready
+      window.addEventListener("load", function () {
+        const loadingScreen = document.getElementById("loading-screen");
+        const root = document.getElementById("root");
+
+        // Wait a bit for React to render, then fade out loading screen
+        setTimeout(() => {
+          if (root && root.children.length > 0) {
+            loadingScreen.classList.add("fade-out");
+            setTimeout(() => {
+              loadingScreen.style.display = "none";
+            }, 500);
+          }
+        }, 1000);
+      });
+
+      // Fallback: Hide loading screen after maximum time
+      setTimeout(() => {
+        const loadingScreen = document.getElementById("loading-screen");
+        if (loadingScreen) {
+          loadingScreen.classList.add("fade-out");
+          setTimeout(() => {
+            loadingScreen.style.display = "none";
+          }, 500);
+        }
+      }, 5000);
+    </script>
   </body>
 </html>

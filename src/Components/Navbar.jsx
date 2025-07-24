@@ -31,7 +31,7 @@ function Navbar() {
             {/* Desktop Navigation */}
             <div className="hidden md:flex  space-x-6 w-full ">
               {currentUser ? (
-                <div className="flex items-center flex-row justify-between w-full">
+                <div className="flex items-center flex-row justify-between w-full ">
                   <div className="flex items-center">
                     <Link to="/" className="flex items-center">
                       <PiReadCvLogoBold className="h-10 mr-2 text-white" />
