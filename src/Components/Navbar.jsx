@@ -161,6 +161,12 @@ function Navbar() {
               <div className="px-2 pt-2 pb-3 space-y-1 bg-transparent border-t border-gray-200">
                 {currentUser ? (
                   <>
+                    <Link to="/" className="flex items-center  px-3 py-2">
+                      <PiReadCvLogoBold className="h-10 mr-2 text-white" />
+                      <h1 className="text-xl font-bold text-white">
+                        CV Builder
+                      </h1>
+                    </Link>
                     <Link
                       to="/dashboard"
                       className="block px-3 py-2 text-gray-200 hover:text-gray-400  rounded-md transition-colors duration-200"
@@ -170,38 +176,45 @@ function Navbar() {
                     </Link>
                     <Link
                       to="/cv"
-                      className="text-white hover:text-gray-300 transition-colors duration-200"
+                      className="block px-3 py-2 text-white hover:text-gray-300 transition-colors duration-200"
                     >
                       Public CVs
                     </Link>
                     <Link
                       to="/howtowrite"
-                      className="text-white hover:text-gray-300 transition-colors duration-200"
+                      className="block px-3 py-2 text-white hover:text-gray-300 transition-colors duration-200"
                     >
                       How to Write CVs
                     </Link>
                     <Link
                       to="/docs"
-                      className="text-white hover:text-gray-300 transition-colors duration-200"
+                      className="block px-3 py-2 text-white hover:text-gray-300 transition-colors duration-200"
                     >
                       Docs
                     </Link>
                     <Link
                       to="/create"
-                      className="block px-3 py-2 text-gray-200 hover:text-gray-400  rounded-md transition-colors duration-200"
+                      className="block px-3 py-2 bg-blue-700 w-1/3  text-gray-200 hover:text-gray-400  rounded-xl transition-colors duration-200"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Create CV
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="block w-full text-left px-3 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-md transition-colors duration-200"
+                      className="block  text-left bg-red-700 w-1/3  px-3 py-2 text-white hover:text-gray-200 rounded-xl hover:bg-red-50  transition-colors duration-200"
                     >
                       Sign Out
                     </button>
                   </>
                 ) : (
                   <>
+                    <Link to="/" className="flex items-center px-3 py-2">
+                      <PiReadCvLogoBold className="h-10 mr-2 text-white" />
+                      <h1 className="text-xl font-bold text-white">
+                        CV Builder
+                      </h1>
+                    </Link>
+
                     <Link
                       to="/cv"
                       className="block w-full text-left px-3 py-2 text-white hover:text-gray-300 transition-colors duration-200"
@@ -222,14 +235,14 @@ function Navbar() {
                     </Link>
                     <Link
                       to="/signin"
-                      className="block w-full text-left px-3 py-2 text-gray-200 hover:text-gray-400 rounded-md transition-colors duration-200"
+                      className="block w-1/3 bg-green-950/70 rounded-xl text-left px-3 py-2 text-white/90 hover:text-gray-400 transition-colors duration-200"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Sign In
                     </Link>
                     <Link
                       to="/signup"
-                      className="block w-full text-left px-3 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-md transition-colors duration-200"
+                      className="block w-1/3 text-left px-3 py-2 rounded-xl bg-blue-950/70 text-white/90 hover:bg-blue-700 transition-colors duration-200"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Sign Up

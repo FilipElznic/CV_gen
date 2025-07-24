@@ -20,6 +20,7 @@ function Home() {
         <PricingSection />
         <HowItWorksSection />
         <FAQ />
+        <ShipwreckedSection />
       </div>
     </>
   );

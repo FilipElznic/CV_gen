@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { getUserCVs, toggleCVVisibility } from "../services/cvService";
+import {
+  getUserCVs,
+  toggleCVVisibility,
+  deleteCV,
+} from "../services/cvService";
 import Navbar from "../Components/Navbar";
 
 function Dashboard() {
@@ -9,6 +13,8 @@ function Dashboard() {
   const [cvs, setCvs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [togglingVisibility, setTogglingVisibility] = useState({});
+  const [deletingCV, setDeletingCV] = useState({});
+  const [deleteConfirm, setDeleteConfirm] = useState(null);
 
   const handleToggleVisibility = async (cvId) => {
     setTogglingVisibility((prev) => ({ ...prev, [cvId]: true }));
@@ -27,6 +33,25 @@ function Dashboard() {
       // You could add a toast notification here
     } finally {
       setTogglingVisibility((prev) => ({ ...prev, [cvId]: false }));
+    }
+  };
+
+  const handleDeleteCV = async (cvId) => {
+    setDeletingCV((prev) => ({ ...prev, [cvId]: true }));
+
+    try {
+      await deleteCV(cvId);
+
+      // Remove the CV from the local state
+      setCvs((prevCvs) => prevCvs.filter((cv) => cv.id !== cvId));
+
+      // Close the confirmation dialog
+      setDeleteConfirm(null);
+    } catch (error) {
+      console.error("Error deleting CV:", error);
+      // You could add a toast notification here
+    } finally {
+      setDeletingCV((prev) => ({ ...prev, [cvId]: false }));
     }
   };
 
@@ -439,6 +464,28 @@ function Dashboard() {
                             View
                           </Link>
                         )}
+
+                        {!cv.isPublic && (
+                          <button
+                            onClick={() => setDeleteConfirm(cv.id)}
+                            className="flex items-center justify-center px-4 py-2 bg-red-500/20 text-red-300 border border-red-500/30 rounded-lg hover:bg-red-500/30 transition duration-200 text-sm font-medium"
+                          >
+                            <svg
+                              className="w-4 h-4 mr-2"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1-1H8a1 1 0 00-1 1v3M4 7h16"
+                              />
+                            </svg>
+                            Delete
+                          </button>
+                        )}
                       </div>
 
                       <div className="grid grid-cols-1 gap-3">
@@ -675,6 +722,76 @@ function Dashboard() {
             </div>
           )}
         </div>
+
+        {/* Delete Confirmation Modal */}
+        {deleteConfirm && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div className="bg-zinc-900 border border-zinc-700 rounded-2xl p-8 max-w-md w-full">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-red-500/20 border border-red-500/30 rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <svg
+                    className="w-8 h-8 text-red-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Delete CV</h3>
+                <p className="text-gray-300 mb-6">
+                  Are you sure you want to delete this CV? This action cannot be
+                  undone.
+                </p>
+                <div className="flex space-x-3">
+                  <button
+                    onClick={() => setDeleteConfirm(null)}
+                    className="flex-1 px-4 py-2 bg-zinc-700 text-gray-300 rounded-lg hover:bg-zinc-600 transition duration-200 font-medium"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => handleDeleteCV(deleteConfirm)}
+                    disabled={deletingCV[deleteConfirm]}
+                    className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                  >
+                    {deletingCV[deleteConfirm] ? (
+                      <>
+                        <svg
+                          className="w-4 h-4 mr-2 animate-spin"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                        Deleting...
+                      </>
+                    ) : (
+                      "Delete"
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
