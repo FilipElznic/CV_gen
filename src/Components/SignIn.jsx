@@ -46,9 +46,9 @@ function SignIn() {
         <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-cyan-600/10 to-blue-500/5 rounded-full blur-xl"></div>
         <div className="absolute bottom-32 right-16 w-32 h-32 bg-gradient-to-tl from-purple-600/10 to-pink-500/5 rounded-full blur-2xl"></div>
         <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-gradient-to-br from-emerald-600/8 to-teal-500/4 rounded-full blur-xl"></div>
-        <div className="w-full max-w-xl mx-auto relative">
+        <div className="w-full max-w-md mx-auto relative">
           {/* Card with glass morphism effect */}
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl p-8 relative overflow-hidden">
+          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl p-8 relative overflow-hidden transition-transform duration-300">
             {/* Inner glow effect */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-2xl"></div>
 

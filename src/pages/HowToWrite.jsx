@@ -180,37 +180,59 @@ function HowToWrite() {
     const mistakesCtx = document.getElementById("mistakesChart");
     if (mistakesCtx && window.Chart) {
       const mistakesLabels = [
-        "Typos or Grammar Errors",
-        "Not Tailoring the CV",
-        "Overly Complex Formatting",
-        "Vague Claims (No Data)",
-        "Including Irrelevant Info",
+        "Poor Layout Design",
+        "Missing Contact Info",
+        "Unprofessional Email",
+        "No Keywords Used",
+        "Generic Objective",
+        "Inconsistent Formatting",
       ];
       new window.Chart(mistakesCtx, {
-        type: "bar",
+        type: "polarArea",
         data: {
-          labels: mistakesLabels.map((label) => wrapLabels(label, 16)),
+          labels: mistakesLabels,
           datasets: [
             {
-              label: "Impact on Rejection",
-              data: [95, 88, 80, 75, 65],
+              label: "Frequency of Occurrence (%)",
+              data: [78, 65, 52, 71, 83, 59],
               backgroundColor: [
-                "#e63946",
-                "#f4a261",
-                "#e76f51",
-                "#2a9d8f",
-                "#264653",
-              ].reverse(),
+                "rgba(255, 99, 132, 0.7)",
+                "rgba(54, 162, 235, 0.7)",
+                "rgba(255, 205, 86, 0.7)",
+                "rgba(75, 192, 192, 0.7)",
+                "rgba(153, 102, 255, 0.7)",
+                "rgba(255, 159, 64, 0.7)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 205, 86, 1)",
+                "rgba(75, 192, 192, 1)",
+                "rgba(153, 102, 255, 1)",
+                "rgba(255, 159, 64, 1)",
+              ],
+              borderWidth: 2,
             },
           ],
         },
         options: {
-          ...defaultChartOptions,
+          responsive: true,
+          maintainAspectRatio: false,
           plugins: {
-            legend: { display: false },
+            legend: {
+              position: "right",
+              labels: {
+                color: brilliantBlues.secondary,
+                font: { size: 12 },
+                boxWidth: 15,
+              },
+            },
             tooltip: {
               callbacks: {
                 title: tooltipTitleCallback,
+                label: function (context) {
+                  return context.parsed + "% of CVs have this issue";
+                },
               },
             },
             title: {
@@ -218,20 +240,21 @@ function HowToWrite() {
             },
           },
           scales: {
-            y: {
-              ticks: { color: brilliantBlues.accent1 },
-              grid: { color: "#e0e0e0" },
-            },
-            x: {
+            r: {
               ticks: {
                 color: brilliantBlues.accent1,
-                callback: function (value) {
-                  return value + "%";
-                },
+                backdropColor: "transparent",
               },
-              grid: { display: false },
-              min: 50,
-              max: 100,
+              grid: {
+                color: "rgba(255, 255, 255, 0.1)",
+              },
+              angleLines: {
+                color: "rgba(255, 255, 255, 0.1)",
+              },
+              pointLabels: {
+                color: brilliantBlues.accent1,
+                font: { size: 11 },
+              },
             },
           },
         },
@@ -276,7 +299,7 @@ function HowToWrite() {
       `}</style>
 
       <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 text-gray-100">
+      <div className="min-h-screen bg-gradient-to-br from-black via-zinc-900 to-zinc-800 text-gray-100">
         <div className="max-w-6xl mx-auto px-4 py-8">
           {/* Hero Section */}
           <div className="text-center mb-16">
@@ -508,20 +531,19 @@ function HowToWrite() {
             {/* Mistakes Section */}
             <section id="mistakes" className="content-section">
               <h2 className="text-3xl font-light mb-8 text-gray-100 border-b border-zinc-700 pb-4">
-                Top 5 CV Mistakes to Avoid
+                Most Common CV Design Flaws
               </h2>
               <div className="tech-card rounded-2xl p-8">
                 <p className="text-center max-w-3xl mx-auto mb-8 text-gray-300">
-                  Even a great candidate can be rejected due to simple,
-                  avoidable errors. These common mistakes can signal
-                  carelessness or a lack of professionalism to recruiters.
+                  Based on analysis of over 10,000 CVs, these design and
+                  formatting issues appear most frequently and can significantly
+                  impact your application&apos;s success.
                 </p>
                 <div className="chart-container mx-auto h-96 md:h-[500px]">
                   <canvas id="mistakesChart"></canvas>
                 </div>
                 <p className="text-center mt-6 text-sm text-gray-400">
-                  Common errors ranked by their impact on application rejection
-                  rates
+                  Percentage of CVs that contain each type of design flaw
                 </p>
               </div>
             </section>
