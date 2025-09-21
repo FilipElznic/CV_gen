@@ -7,6 +7,7 @@ import {
   deleteCV,
 } from "../services/cvService";
 import Navbar from "../Components/Navbar";
+import QRCodeModal from "../Components/QRCodeModal";
 
 function Dashboard() {
   const { currentUser } = useAuth();
@@ -16,6 +17,7 @@ function Dashboard() {
   const [deletingCV, setDeletingCV] = useState({});
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [downloadingPDF, setDownloadingPDF] = useState({});
+  const [qrModalCV, setQrModalCV] = useState(null);
 
   const handleToggleVisibility = async (cvId) => {
     setTogglingVisibility((prev) => ({ ...prev, [cvId]: true }));
@@ -58,9 +60,40 @@ function Dashboard() {
     setDownloadingPDF((prev) => ({ ...prev, [cv.id]: true }));
 
     try {
+      // Check if CV has any meaningful content
+      const hasPersonalInfo =
+        cv.data.personalInfo?.fullName ||
+        cv.data.personalInfo?.email ||
+        cv.data.personalInfo?.phone ||
+        cv.data.personalInfo?.location ||
+        cv.data.personalInfo?.summary;
+      const hasExperience = cv.data.experience && cv.data.experience.length > 0;
+      const hasEducation = cv.data.education && cv.data.education.length > 0;
+      const hasSkills = cv.data.skills && cv.data.skills.length > 0;
+
+      const hasContent =
+        hasPersonalInfo || hasExperience || hasEducation || hasSkills;
+
       // Import jsPDF dynamically
       const { default: jsPDF } = await import("jspdf");
       const html2canvas = (await import("html2canvas")).default;
+
+      // Create PDF instance
+      const pdf = new jsPDF("p", "mm", "a4");
+
+      if (!hasContent) {
+        // If no content, create a simple PDF with a message
+        pdf.setFontSize(16);
+        pdf.text("This CV has no content yet.", 20, 30);
+        pdf.setFontSize(12);
+        pdf.text("Please edit the CV to add your information.", 20, 50);
+
+        const fileName = `${
+          cv.data.personalInfo?.fullName || "Empty_CV"
+        }_${new Date().getFullYear()}.pdf`;
+        pdf.save(fileName);
+        return;
+      }
 
       // Create a temporary container for the CV
       const container = document.createElement("div");
@@ -76,7 +109,38 @@ function Dashboard() {
 
       // Create CV content HTML
       const cvHTML = `
+        <style>
+          @page {
+            margin: 0;
+            size: A4;
+            -webkit-print-color-adjust: exact;
+          }
+          @media print {
+            html, body {
+              margin: 0 !important;
+              padding: 0 !important;
+              -webkit-print-color-adjust: exact;
+            }
+            .no-print, .no-print * {
+              display: none !important;
+            }
+            header, footer {
+              display: none !important;
+            }
+          }
+          body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+          }
+        </style>
         <div style="max-width: 100%; margin: 0 auto;">
+          ${
+            cv.data.personalInfo?.fullName ||
+            cv.data.personalInfo?.email ||
+            cv.data.personalInfo?.phone ||
+            cv.data.personalInfo?.location
+              ? `
           <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #333; padding-bottom: 20px;">
             <h1 style="margin: 0; font-size: 28px; color: #333;">${
               cv.data.personalInfo?.fullName || "Untitled CV"
@@ -97,6 +161,9 @@ function Dashboard() {
                 : ""
             }
           </div>
+          `
+              : ""
+          }
           
           ${
             cv.data.personalInfo?.summary
@@ -192,35 +259,58 @@ function Dashboard() {
       container.innerHTML = cvHTML;
       document.body.appendChild(container);
 
-      // Convert to canvas
+      // Convert to canvas with better handling for small content
       const canvas = await html2canvas(container, {
         scale: 2,
         useCORS: true,
         allowTaint: false,
         backgroundColor: "#ffffff",
+        height: Math.max(container.scrollHeight, 300), // Ensure minimum height
+        width: container.scrollWidth,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: container.scrollWidth,
+        windowHeight: container.scrollHeight,
+        ignoreElements: (element) => {
+          // Ignore any elements that might contain browser headers/footers
+          return (
+            element.tagName === "HEADER" ||
+            element.tagName === "FOOTER" ||
+            element.classList?.contains("no-print") ||
+            element.style?.display === "none"
+          );
+        },
       });
 
       // Remove temporary container
       document.body.removeChild(container);
 
-      // Create PDF
+      // Generate PDF from canvas
       const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "mm", "a4");
       const imgWidth = 210;
       const pageHeight = 295;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
 
-      let position = 0;
+      // Only add content if there's actual content to display
+      if (imgHeight > 0) {
+        let position = 0;
 
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
+        // Add the first page
         pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+
+        // Only add additional pages if the content actually exceeds one page
+        let heightLeft = imgHeight - pageHeight;
+
+        while (heightLeft > 0) {
+          position = -heightLeft;
+          pdf.addPage();
+          pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+      } else {
+        // If no content, add a simple message
+        pdf.setFontSize(16);
+        pdf.text("No content available for this CV", 20, 30);
       }
 
       // Download the PDF
@@ -645,6 +735,28 @@ function Dashboard() {
                           </Link>
                         )}
 
+                        {cv.isPublic && (
+                          <button
+                            onClick={() => setQrModalCV(cv)}
+                            className="flex items-center justify-center px-4 py-2 bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded-lg hover:bg-blue-500/30 transition duration-200 text-sm font-medium"
+                          >
+                            <svg
+                              className="w-4 h-4 mr-2"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"
+                              />
+                            </svg>
+                            QR Code
+                          </button>
+                        )}
+
                         {!cv.isPublic && (
                           <button
                             onClick={() => setDeleteConfirm(cv.id)}
@@ -1016,6 +1128,16 @@ function Dashboard() {
               </div>
             </div>
           </div>
+        )}
+
+        {/* QR Code Modal */}
+        {qrModalCV && (
+          <QRCodeModal
+            isOpen={true}
+            onClose={() => setQrModalCV(null)}
+            cvData={qrModalCV.data}
+            cvSlug={qrModalCV.slug}
+          />
         )}
       </div>
     </>

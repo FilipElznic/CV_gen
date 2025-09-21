@@ -64,7 +64,7 @@ function App() {
               <Route path="/howtowrite" element={<HowToWrite />} />
               <Route path="/docs" element={<Docs />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
-              <Route path="/how-to-write" element={<HowToWrite />} />
+
               <Route path="/cv/:slug" element={<PublicCV />} />
               <Route path="/cv" element={<AllCV />} />
             </Routes>

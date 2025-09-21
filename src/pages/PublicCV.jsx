@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getPublicCV } from "../services/cvService";
 import Navbar from "../Components/Navbar";
+import QRCodeModal from "../Components/QRCodeModal";
 
 function PublicCV() {
   const { slug } = useParams();
@@ -9,6 +10,7 @@ function PublicCV() {
   const [cv, setCv] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showQRModal, setShowQRModal] = useState(false);
 
   useEffect(() => {
     const fetchCV = async () => {
@@ -409,8 +411,49 @@ function PublicCV() {
                   </div>
                 </section>
               )}
+
+            {/* QR Code Section */}
+            <section className="mt-8 pt-6 border-t border-gray-200">
+              <div className="bg-gray-50 rounded-lg p-6">
+                <div className="text-center">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    Share this CV
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4">
+                    Generate a QR code to easily share this CV with others
+                  </p>
+                  <button
+                    onClick={() => setShowQRModal(true)}
+                    className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition duration-200 shadow-md hover:shadow-lg"
+                  >
+                    <svg
+                      className="w-5 h-5 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"
+                      />
+                    </svg>
+                    Generate QR Code
+                  </button>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
+
+        {/* QR Code Modal */}
+        <QRCodeModal
+          isOpen={showQRModal}
+          onClose={() => setShowQRModal(false)}
+          cvData={data}
+          cvSlug={slug}
+        />
       </div>
     </>
   );

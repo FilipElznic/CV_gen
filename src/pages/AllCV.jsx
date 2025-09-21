@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Navbar from "../Components/Navbar";
 import { getAllPublicCVs, getPublicCVUrl } from "../services/cvService";
 import { useAuth } from "../contexts/AuthContext";
+import QRCodeModal from "../Components/QRCodeModal";
 
 function AllCV() {
   const { currentUser } = useAuth();
@@ -21,6 +22,7 @@ function AllCV() {
     sortBy: "newest", // newest, oldest, name
   });
   const [showFilters, setShowFilters] = useState(true);
+  const [qrModalCV, setQrModalCV] = useState(null);
 
   useEffect(() => {
     const fetchPublicCVs = async () => {
@@ -567,15 +569,40 @@ function AllCV() {
                         </span>
                       </div>
 
-                      <button
-                        className={`w-full py-2 px-4 text-sm font-medium rounded-lg transition-all duration-200 ${
-                          isOwner
-                            ? "bg-zinc-600 hover:bg-zinc-700 text-white"
-                            : "bg-black/70 hover:bg-black text-white"
-                        }`}
-                      >
-                        View CV
-                      </button>
+                      <div className="space-y-2">
+                        <button
+                          onClick={() =>
+                            (window.location.href = `/cv/${cv.slug}`)
+                          }
+                          className={`w-full py-2 px-4 text-sm font-medium rounded-lg transition-all duration-200 ${
+                            isOwner
+                              ? "bg-zinc-600 hover:bg-zinc-700 text-white"
+                              : "bg-black/70 hover:bg-black text-white"
+                          }`}
+                        >
+                          View CV
+                        </button>
+
+                        <button
+                          onClick={() => setQrModalCV(cv)}
+                          className="w-full py-2 px-4 text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all duration-200 flex items-center justify-center"
+                        >
+                          <svg
+                            className="w-4 h-4 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"
+                            />
+                          </svg>
+                          Get QR Code
+                        </button>
+                      </div>
                     </div>
                   </div>
                 );
@@ -583,6 +610,16 @@ function AllCV() {
             </div>
           )}
         </div>
+
+        {/* QR Code Modal */}
+        {qrModalCV && (
+          <QRCodeModal
+            isOpen={true}
+            onClose={() => setQrModalCV(null)}
+            cvData={qrModalCV.data}
+            cvSlug={qrModalCV.slug}
+          />
+        )}
       </div>
     </>
   );

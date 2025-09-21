@@ -3,9 +3,9 @@
 A modern, full-stack web application for creating, and sharing professional CVs. Built with React and Firebase, featuring an intuitive interface, multiple templates, and powerful sharing capabilities.
 
 ![CV Generator](https://img.shields.io/badge/React-18.x-blue?style=for-the-badge&logo=react)
-![Firebase](https://img.shields.io/badge/Firebase-9.x-orange?style=for-the-badge&logo=firebase)
+![Firebase](https://img.shields.io/badge/Firebase-12.x-orange?style=for-the-badge&logo=firebase)
 ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-3.x-blue?style=for-the-badge&logo=tailwind-css)
-![Vite](https://img.shields.io/badge/Vite-4.x-purple?style=for-the-badge&logo=vite)
+![Vite](https://img.shields.io/badge/Vite-5.x-purple?style=for-the-badge&logo=vite)
 
 ## ✨ Features
 
@@ -13,7 +13,7 @@ A modern, full-stack web application for creating, and sharing professional CVs.
 
 - Interactive form-based CV creation
 - Real-time preview and editing
-- Multiple color tempelates
+- Multiple color templates
 
 ### 👤 **User Management**
 
@@ -37,9 +37,10 @@ A modern, full-stack web application for creating, and sharing professional CVs.
 
 ### 📊 **Analytics & Features**
 
-- View all public CVs at one plcae
+- View all public CVs at one place
 - Preview statistics
 - Export capabilities (PDF, sharing links)
+- QR code generation for easy CV sharing
 
 ## 🚀 Quick Start
 

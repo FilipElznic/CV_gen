@@ -613,6 +613,70 @@ function Create() {
   return (
     <>
       <Navbar />
+      <style>
+        {`
+          @page {
+            margin: 0;
+            size: A4;
+            -webkit-print-color-adjust: exact;
+          }
+          @media print {
+            * {
+              -webkit-print-color-adjust: exact !important;
+              color-adjust: exact !important;
+            }
+            body, html {
+              margin: 0 !important;
+              padding: 0 !important;
+              background: white !important;
+            }
+            /* Hide everything except CV preview */
+            body > div:not([class*="cv-preview"]) {
+              display: none !important;
+            }
+            .min-h-screen > div > div > div:not(:has(.cv-preview)) {
+              display: none !important;
+            }
+            /* Show only the CV preview container */
+            .min-h-screen,
+            .min-h-screen > div,
+            .min-h-screen > div > div,
+            .min-h-screen > div > div > div:has(.cv-preview) {
+              display: block !important;
+              width: 100% !important;
+              max-width: none !important;
+              margin: 0 !important;
+              padding: 0 !important;
+              background: white !important;
+              min-height: auto !important;
+            }
+            /* Style the CV preview for print */
+            .cv-preview {
+              max-height: none !important;
+              overflow: visible !important;
+              box-shadow: none !important;
+              border: none !important;
+              margin: 0 !important;
+              padding: 20mm !important;
+              background: white !important;
+              border-radius: 0 !important;
+              min-height: auto !important;
+            }
+            /* Hide navigation and buttons */
+            nav,
+            .navbar,
+            button,
+            .print\\:hidden,
+            h2:contains("Preview") {
+              display: none !important;
+            }
+            /* Ensure proper page breaks */
+            .cv-preview * {
+              page-break-inside: avoid;
+            }
+          }
+        `}
+      </style>
       <div className="min-h-screen bg-gradient-to-br from-black via-zinc-900 to-zinc-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid xl:grid-cols-2 gap-8">
